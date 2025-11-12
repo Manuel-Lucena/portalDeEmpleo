@@ -1,0 +1,37 @@
+<div class="velo modalForm" id="modalCargaAlumnos">
+  <div class="modal">
+    <h2>Carga Masiva de Alumnos</h2>
+
+
+    <div class="campos">
+      <div>
+        <label for="selectFamiliaCarga">Familia profesional:</label>
+        <select id="selectFamiliaCarga">
+          <option value="">Seleccione familia</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="selectCicloCarga">Ciclo formativo:</label>
+        <select id="selectCicloCarga" disabled>
+          <option value="">Seleccione ciclo</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Archivo CSV -->
+    <div class="archivo">
+      <label for="archivoCSV">Seleccionar archivo CSV:</label>
+      <input type="file" id="archivoCSV" accept=".csv">
+    </div>
+
+    <!-- Botones -->
+    <div class="botones">
+      <button type="button" id="btnLeerCSV" class="btnVerde">Leer archivo</button>
+      <button type="button" id="btnCancelarCarga" class="btnRojo">Salir</button>
+    </div>
+
+    <!-- Contenedor donde se mostrará la tabla -->
+    <div id="previewCSV"></div>
+  </div>
+</div>

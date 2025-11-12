@@ -1,0 +1,86 @@
+<div class="velo modalForm" id="modalNuevoAlumno">
+  <div class="modal">
+    <h3>Añadir alumno</h3>
+
+    <form id="formNuevoAlumno">
+      <div class="campos">
+        <div>
+          <label for="nuevoNombre">Nombre:</label>
+          <input type="text" id="nuevoNombre" required>
+          <span class="error" id="errorNombre"></span>
+        </div>
+
+        <div>
+          <label for="nuevoEmail">Email:</label>
+          <input type="email" id="nuevoEmail" required>
+          <span class="error" id="errorEmail"></span>
+        </div>
+
+        <div>
+          <label for="nuevoPassword">Contraseña:</label>
+          <input type="password" id="nuevoPassword" required>
+          <span class="error" id="errorPassword"></span>
+        </div>
+
+        <div>
+          <label for="nuevaFecha">Fecha de nacimiento:</label>
+          <input type="date" id="nuevaFecha" required>
+          <span class="error" id="errorFecha"></span>
+        </div>
+
+        <div>
+          <label for="nuevoTelefono">Teléfono:</label>
+          <input type="tel" id="nuevoTelefono" required>
+          <span class="error" id="errorTelefono"></span>
+        </div>
+
+        <div>
+          <label for="nuevaDireccion">Dirección:</label>
+          <input type="text" id="nuevaDireccion" required>
+          <span class="error" id="errorDireccion"></span>
+        </div>
+
+        <div>
+          <label for="selectFamilia">Familia profesional:</label>
+          <select id="selectFamilia" required>…</select>
+          <span class="error" id="errorFamilia"></span>
+        </div>
+
+        <div>
+          <label for="selectCiclo">Ciclo formativo:</label>
+          <select id="selectCiclo" required disabled>…</select>
+          <span class="error" id="errorCiclo"></span>
+        </div>
+
+        <div>
+          <label for="fechaInicioEstudio">Fecha inicio:</label>
+          <input type="date" id="fechaInicioEstudio" required>
+          <span class="error" id="errorFechaInicio"></span>
+        </div>
+
+        <div>
+          <label for="fechaFinEstudio">Fecha fin:</label>
+          <input type="date" id="fechaFinEstudio" required>
+          <span class="error" id="errorFechaFin"></span>
+        </div>
+      </div>
+
+      <div class="archivo">
+        <label for="nuevoCurriculum">Currículum (PDF):</label>
+        <input type="file" id="nuevoCurriculum">
+        <span class="error" id="errorCurriculum"></span>
+      </div>
+
+      <div class="fotoPerfil">
+        <label for="nuevaFotoPerfil">Foto de perfil:</label>
+        <input type="file" id="nuevaFotoPerfil">
+        <span class="error" id="errorFotoPerfil"></span>
+      </div>
+
+      <div class="botones">
+        <button type="button" id="btnGuardarNuevo">Guardar</button>
+        <button type="button" id="btnCancelarNuevo" class="cerrarModal">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>

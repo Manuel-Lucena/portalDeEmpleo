@@ -1,0 +1,288 @@
+.velo {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(200, 200, 200, 0.525);
+    z-index: 9;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    background: white;
+    padding: 25px 20px;
+    z-index: 10;
+}
+
+.modalForm h3 {
+  text-align: center;
+  margin-bottom: 18px;
+  font-size: 18px;
+  color: #222;
+}
+
+/* -------------------- CAMPOS EN 2 COLUMNAS -------------------- */
+.modalForm .campos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 18px;
+}
+
+/* -------------------- INPUTS Y LABELS -------------------- */
+.modalForm label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 14px;
+  color: #333;
+}
+
+.modalForm input {
+  width: 100%;
+  padding: 7px 9px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+/* -------------------- CAMPOS SUELTOS -------------------- */
+.modalForm .archivo,
+.modalForm .fotoPerfil {
+  margin-top: 15px;
+}
+
+.modalForm input[type="file"] {
+  border: none;
+  padding: 0;
+}
+
+/* -------------------- BOTÓN CÁMARA -------------------- */
+.modalForm #btnAbrirCamara {
+  margin-top: 6px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* -------------------- BOTONES INFERIORES -------------------- */
+.modalForm .botones {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.modalForm button {
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.modalForm #btnGuardarNuevo,
+.modalForm #btnGuardarEditar {
+  width: 120px;
+  padding: 8px 0;
+  border: none;
+  font-size: 14px;
+  color: #fff;
+  background: #28a745;
+}
+
+.modalForm .cerrarModal {
+  width: 120px;
+  padding: 8px 0;
+  border: none;
+  font-size: 14px;
+  color: #fff;
+  background: #dc3545;
+}
+
+/* -------------------- RESPONSIVE -------------------- */
+@media (max-width: 600px) {
+  .modalForm .campos {
+    grid-template-columns: 1fr;
+  }
+
+  .modalForm .modal {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .modalForm .botones {
+    flex-direction: column;
+  }
+
+  .modalForm button {
+    width: 100%;
+  }
+}
+
+
+/* -------------------- MODAL DETALLES ALUMNO -------------------- */
+.detalles-alumno {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 20px;
+  align-items: center; 
+}
+
+.contenedor-foto {
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+}
+
+.contenedor-foto img {
+  max-width: 120px;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 2px solid #e0e0e0;
+  padding: 5px;
+  background-color: #f9f9f9;
+}
+
+.info-alumno p {
+  margin: 6px 0;
+  font-size: 0.95em;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 4px;
+}
+
+.modal h2 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.btn-cerrar {
+  display: block;
+  width: 120px;
+  padding: 8px 15px;
+  margin: 15px auto 0;
+  background-color: #3a5ec0;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-cerrar:hover {
+  background-color: #2c4e9c;
+}
+
+span.error {
+    color: red;
+    font-size: 0.9rem;
+    display: block;
+}
+
+
+
+
+/* -------------------- MODAL CARGA MASIVA ALUMNO -------------------- */
+#modalCargaAlumnos .modal {
+    width: 400px;
+    max-width: 90%; 
+    text-align: center; 
+    display: flex;
+    flex-direction: column;
+    gap: 15px; 
+}
+
+
+#modalCargaAlumnos input[type="file"] {
+    margin: 0 auto; 
+}
+
+/* Contenedor para los botones */
+#modalCargaAlumnos .botones {
+    display: flex;
+    justify-content: center; 
+    gap: 15px; 
+    margin-top: 10px;
+}
+
+/* Botones individuales */
+#modalCargaAlumnos .botones button {
+    width: 150px;
+    padding: 8px 0;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* Colores */
+#modalCargaAlumnos #btnLeerCSV {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+}
+
+#modalCargaAlumnos #btnLeerCSV:hover {
+    background-color: #218838;
+}
+
+#modalCargaAlumnos #btnCancelarCarga {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+}
+
+#modalCargaAlumnos #btnCancelarCarga:hover {
+    background-color: #c82333;
+}
+
+
+/* -------------------- MODAL CARGA MASIVA ALUMNO PREVIEW-------------------- */
+#modalCargaAlumnos .modal {
+    width: 500px;
+    max-width: 90%;
+    max-height: 90vh; 
+    overflow-y: auto; 
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#modalCargaAlumnos .contenido {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-x: auto; 
+}
+
+#tablaPreview {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 10px;
+}
+
+#tablaPreview th, #tablaPreview td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+#tablaPreview th {
+    background-color: #f2f2f2;
+    position: sticky;
+    top: 0;
+}
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,21 @@
+Datos recibidos: Array
+(
+    [id] => 1
+    [nombre] => Laura Gómez
+    [email] => laura@example.com
+    [fecha_nacimiento] => 
+    [direccion] => 
+    [telefono] => 
+)
+
+Excepción: SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect date value: '' for column 'fecha_nacimiento' at row 1
+Datos recibidos: Array
+(
+    [id] => 1
+    [nombre] => Laura Gómez
+    [email] => laura@example.com
+    [fecha_nacimiento] => 2025-11-05
+    [direccion] => 
+    [telefono] => 
+)
+

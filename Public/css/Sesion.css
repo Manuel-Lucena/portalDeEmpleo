@@ -1,0 +1,302 @@
+/* ====== FONDO GENERAL ====== */
+body {
+  background: linear-gradient(135deg, #4e73df, #1cc88a);
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column; /* combinado para login y otras tarjetas */
+  justify-content: center;
+  align-items: center;
+  font-family: "Segoe UI", Arial, sans-serif;
+  text-align: center;
+}
+
+/* ====== CONTENEDOR DE REGISTRO ====== */
+.registro-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+}
+
+/* ====== TARJETA DE REGISTRO ====== */
+.registro-box {
+  background: #ffffff;
+  padding: 25px 30px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 600px;
+  box-sizing: border-box;
+}
+
+.registro-box h2 {
+  text-align: center;
+  color: #4e73df;
+  margin-bottom: 15px;
+  font-size: 1.5em;
+}
+
+/* ====== FORMULARIO DE REGISTRO ====== */
+.form-dos-columnas {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.fila {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px 20px;
+}
+
+.campo label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  font-size: 0.9em;
+}
+
+.campo input {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  padding: 7px;
+  box-sizing: border-box;
+}
+
+/* ====== BOTÓN DE REGISTRO ====== */
+.registro-box input[type="submit"] {
+  margin-top: 10px;
+  padding: 10px 0;
+  background: #4e73df;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  width: 150px;
+  align-self: center;
+  cursor: pointer;
+}
+
+.registro-box p {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 0.9em;
+}
+
+.registro-box a {
+  color: #461ef7;
+  text-decoration: none;
+}
+
+/* ====== LOGIN ====== */
+.login-container {
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-container h2 {
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+.login-container form {
+  background-color: #fff;
+  padding: 30px 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.login-container label {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.login-container input,
+.login-container select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.login-container input[type="submit"] {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #4e73df;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.login-container p,
+.login-container button,
+.login-container a {
+  margin-top: 10px;
+  text-align: center;
+  display: block;
+}
+
+/* ====== DETALLES DE EMPRESA ====== */
+.contenedor-detalles {
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+}
+
+.caja-detalles {
+  background: #fff;
+  padding: 25px 30px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 600px;
+  box-sizing: border-box;
+}
+
+.caja-detalles h2 {
+  text-align: center;
+  color: #4e73df;
+  margin-bottom: 15px;
+  font-size: 1.5em;
+}
+
+.detalles-entidad {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  align-items: center;
+  gap: 20px;
+}
+
+.contenedor-logo {
+  text-align: center;
+}
+
+.contenedor-logo img {
+  max-width: 120px;
+  height: auto;
+  border-radius: 8px;
+  object-fit: contain;
+  border: 1px solid #e0e0e0;
+  padding: 5px;
+  background-color: #f9f9f9;
+}
+
+.informacion-detalles {
+  text-align: left;
+}
+
+.informacion-detalles p {
+  margin: 6px 0;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 4px;
+}
+
+.btn-volver {
+  background-color: #3a5ec0;
+  padding: 8px 15px;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #fff;
+  margin-top: 15px;
+}
+
+.btn-volver:hover {
+  background: #3a5ec0;
+}
+
+/* ====== OFERTAS ====== */
+.oferta-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+}
+
+.oferta-box {
+  background: #fff;
+  padding: 25px 30px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 600px;
+  box-sizing: border-box;
+}
+
+.oferta-box h2 {
+  text-align: center;
+  color: #4e73df;
+  margin-bottom: 15px;
+  font-size: 1.5em;
+}
+
+.form-oferta {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-oferta .fila {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px 20px;
+}
+
+.form-oferta .campo label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  font-size: 0.9em;
+}
+
+.form-oferta .campo input,
+.form-oferta .campo textarea {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  padding: 7px;
+  box-sizing: border-box;
+}
+
+.form-oferta .campo textarea {
+  resize: vertical;
+}
+
+.form-oferta button {
+  margin-top: 10px;
+  padding: 10px 0;
+  background: #4e73df;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  width: 150px;
+  align-self: center;
+  cursor: pointer;
+}
+
+/* ====== UTILIDADES ====== */
+.span-dos {
+  grid-column: span 2;
+}
+
+@media (max-width: 768px) {
+  .fila {
+    grid-template-columns: 1fr;
+  }
+
+  .registro-box,
+  .oferta-box {
+    max-width: 90%;
+    padding: 20px;
+  }
+
+  .form-oferta .fila {
+    grid-template-columns: 1fr;
+  }
+}

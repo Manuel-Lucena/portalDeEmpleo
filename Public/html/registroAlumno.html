@@ -1,0 +1,74 @@
+<div class="velo modalForm" id="ModalRegistro">
+  <div class="modal">
+    <h3>Registro Alumno</h3>
+
+    <form id="formRegistroAlumno">
+      <div class="campos">
+        <div>
+          <label for="nuevoNombre">Nombre:</label>
+          <input type="text" id="nuevoNombre" required>
+        </div>
+        <div>
+          <label for="nuevoEmail">Email:</label>
+          <input type="email" id="nuevoEmail" required>
+        </div>
+        <div>
+          <label for="nuevoContraseña">Contraseña:</label>
+          <input type="text" id="nuevoContraseña">
+        </div>
+        <div>
+          <label for="nuevoTelefono">Teléfono:</label>
+          <input type="text" id="nuevoTelefono">
+        </div>
+        <div>
+          <label for="nuevoDireccion">Dirección:</label>
+          <input type="text" id="nuevoDireccion">
+        </div>
+        <div>
+          <label for="nuevoFechaNacimiento">Fecha de nacimiento:</label>
+          <input type="date" id="nuevoFechaNacimiento">
+        </div>
+
+
+        <div>
+          <label for="selectFamilia">Familia Profesional:</label>
+          <select id="selectFamilia" required>
+            <option value="">Seleccione una familia</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="selectCicloRegistro">Ciclo Formativo:</label>
+          <select id="selectCicloRegistro" required disabled>
+            <option value="">Seleccione primero una familia</option>
+          </select>
+
+        </div>
+        <div>
+          <label for="fechaInicioEstudio">Fecha inicio:</label>
+          <input type="date" id="fechaInicioEstudio" required>
+        </div>
+        <div>
+          <label for="fechaFinEstudio">Fecha fin:</label>
+          <input type="date" id="fechaFinEstudio" required>
+        </div>
+      </div>
+
+      <div class="archivo">
+        <label for="nuevoCurriculum">Currículum (PDF):</label>
+        <input type="file" id="nuevoCurriculum" accept="application/pdf">
+      </div>
+
+      <div class="fotoPerfil">
+        <label for="nuevoFotoPerfil">Foto de perfil:</label>
+        <input id="nuevoFotoPerfil" name="fotoPerfil">
+        <button type="button" id="btnAbrirCamara">Usar cámara</button>
+      </div>
+
+      <div class="botones">
+        <button type="button" id="btnGuardarNuevo">Guardar</button>
+        <button type="button" id="btnCancelarNuevo" class="cerrarModal">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
