@@ -1,0 +1,52 @@
+version: "3.9"  
+
+services:
+
+  php-apache:
+    build: . 
+    container_name: php_app  
+    ports:
+      - "8080:80" 
+    volumes:
+      - ./:/var/www/html  # Monta el directorio actual en el contenedor 
+    environment:
+      - MAIL_HOST=mailhog  # Variables de entorno para configurar el correo
+      - MAIL_PORT=1025
+    networks:
+      - red_personalizada  # Conecta este contenedor a la red personalizada
+
+  mailhog:
+    image: mailhog/mailhog:latest  
+    container_name: mailhog
+    ports:
+      - "8025:8025" 
+      - "1025:1025"  # Puerto SMTP para enviar correos
+    networks:
+      - red_personalizada
+
+  mysql:
+    image: mysql:8.0  
+    container_name: mysql_db
+    restart: always  # Reinicia el contenedor automáticamente si falla
+    environment:
+      MYSQL_ROOT_PASSWORD: root 
+      MYSQL_DATABASE: portaldeempleo 
+      MYSQL_ROOT_HOST: '%'  # Permite conexiones root desde cualquier host
+      MYSQL_INITDB_SKIP_TZINFO: 1  
+      MYSQL_LOWER_CASE_TABLE_NAMES: 1  
+    ports:
+      - "3306:3306"  
+    volumes:
+      - mysql_data:/var/lib/mysql  # Volumen persistente para que la base de datos no se pierda al reiniciar
+      - ./mysql-config.cnf:/etc/mysql/conf.d/mysql-config.cnf  
+    networks:
+      - red_personalizada
+
+# Definición de la red personalizada para que los contenedores puedan comunicarse
+networks:
+  red_personalizada:
+    driver: bridge
+
+# Volúmenes persistentes
+volumes:
+  mysql_data:  

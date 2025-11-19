@@ -11,7 +11,7 @@
 
     <form method="post" action="../Public/index.php?menu=RegistroEmpresa" enctype="multipart/form-data" class="form-dos-columnas">
 
-      <!-- Fila 1: Nombre de empresa y Usuario -->
+
       <div class="fila">
         <div class="campo">
           <label for="nombreEmpresa">Nombre de la empresa:</label>
@@ -24,7 +24,7 @@
         </div>
       </div>
 
-      <!-- Fila 2: Contraseña y Confirmación -->
+ 
       <div class="fila">
         <div class="campo">
           <label for="nuevoContraseña">Contraseña:</label>
@@ -33,11 +33,11 @@
 
         <div class="campo">
           <label for="repetirContraseña">Repetir contraseña:</label>
-          <input type="password" id="repetirContraseña" name="repetirContrasena" required>
+          <input type="password" id="repetirContraseña" name="repetirContraseña" required>
         </div>
       </div>
 
-      <!-- Fila 3: Email y Teléfono -->
+
       <div class="fila">
         <div class="campo">
           <label for="nuevoEmail">Email:</label>
@@ -50,7 +50,7 @@
         </div>
       </div>
 
-      <!-- Fila 4: Persona de contacto y Dirección -->
+
       <div class="fila">
         <div class="campo">
           <label for="personaContacto">Persona de contacto:</label>
@@ -63,7 +63,7 @@
         </div>
       </div>
 
-      <!-- Fila 5: Logo de empresa -->
+
       <div class="fila">
        <div class="campo span-dos">
           <label for="logoEmpresa">Logo de empresa:</label>

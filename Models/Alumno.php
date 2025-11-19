@@ -11,6 +11,7 @@ class Alumno {
     private $curriculum;
     private $email;
     private $foto;
+    
 
   public function __construct($id = null, $idUser = null, $nombre = null, $email = null, $fechaNacimiento = null, $direccion = null, $telefono = null, $curriculum = null, $foto = null) {
         $this->id = $id;

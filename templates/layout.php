@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $this->e($titulo ?? 'Portal de Empleo') ?></title>
-
+    <link rel="icon" type="image/x-icon" href="/public/images/Logo.png">
     <!-- CSS global -->
     <link rel="stylesheet" href="../Public/css/base.css">
-
+    <script src="../Public/js/menu.js"></script>
     <?= $this->section('css') ?>
 </head>
 
@@ -17,7 +17,9 @@
     <!-- Header global -->
     <header>
         <a href="../Public/Index.php?menu=Inicio"><img src="../Public/images/Logo.png" class="logo"></a>
+        <button class="menu-btn" id="menuBtn">☰</button>
         <div class="menu-container">
+
             <nav>
                 <?php
                 require_once __DIR__ . '/../Helpers/Login.php';
@@ -49,6 +51,7 @@
         <?php } ?>
 
 
+
     </header>
 
     <!-- Contenido principal -->
@@ -76,7 +79,7 @@
             </div>
         </div>
     </footer>
-    <!-- <script src="../Public/js/Token.js"></script> -->
+
 
     <?= $this->section('js') ?>
 </body>

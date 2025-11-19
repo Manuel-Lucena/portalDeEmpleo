@@ -16,8 +16,8 @@ class RepoEmpresaCandidata {
         $empresas = [];
         foreach ($filas as $fila) {
             $empresas[] = new Empresa(
-                $fila['idUser'], // 👈 clave correcta
-                $fila['idUser'], // también será su idUser real
+                $fila['idUser'], 
+                $fila['idUser'],
                 $fila['nombreEmpresa'],
                 $fila['telefono'],
                 $fila['direccion'],
@@ -36,11 +36,11 @@ class RepoEmpresaCandidata {
         try {
             $con->beginTransaction();
 
-            // 1️⃣ Guardar usuario
+        
             RepoUser::save($user);
             $empresa->setIdUser($user->getId());
 
-            // 2️⃣ Guardar empresa candidata
+       
             $stmt = $con->prepare("
                 INSERT INTO EMPRESA_CANDIDATA (idUser, nombreEmpresa, telefono, direccion, personaContacto, email, logo)
                 VALUES (?, ?, ?, ?, ?, ?, ?)
@@ -84,16 +84,14 @@ class RepoEmpresaCandidata {
         try {
             $con->beginTransaction();
 
-            // 1️⃣ Obtener los datos de la empresa candidata
+
             $stmt = $con->prepare("SELECT * FROM EMPRESA_CANDIDATA WHERE idUser = ?");
             $stmt->execute([$idUserCandidata]);
             $empresa = $stmt->fetch(\PDO::FETCH_ASSOC);
 
-            if (!$empresa) {
-                throw new \Exception("No se encontró la empresa candidata con ID $idUserCandidata");
-            }
+       
 
-            // 2️⃣ Insertar en EMPRESA directamente (ya existe el user)
+      
             $stmt = $con->prepare("
                 INSERT INTO EMPRESA (idUser, nombreEmpresa, telefono, direccion, personaContacto, email, logo)
                 VALUES (?, ?, ?, ?, ?, ?, ?)
@@ -108,7 +106,7 @@ class RepoEmpresaCandidata {
                 $empresa['logo']
             ]);
 
-            // 3️⃣ Eliminar de candidatas
+      
             $stmt = $con->prepare("DELETE FROM EMPRESA_CANDIDATA WHERE idUser = ?");
             $stmt->execute([$idUserCandidata]);
 

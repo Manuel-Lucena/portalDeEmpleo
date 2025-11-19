@@ -1,59 +1,119 @@
+/* =====================================================
+   ÍNDICE
+   1. Variables (tokens)
+   2. Modal general
+   3. Formulario modal
+   4. Modal detalles alumno
+   5. Botones cerrar y errores
+   6. Modal carga masiva alumno
+   7. Preview tabla carga masiva
+   8. Eliminar alumno
+===================================================== */
+
+/* ===================== 1. VARIABLES (TOKENS) ===================== */
+:root {
+  --color-velo-bg: rgba(200, 200, 200, 0.5);
+  --color-modal-bg: #fff;
+  --color-modal-shadow: rgba(0,0,0,0.1);
+  --color-label: #333;
+  --color-input-border: #ccc;
+  --color-btn-primario: #28a745;
+  --color-btn-primario-hover: #218838;
+  --color-btn-secundario: #dc3545;
+  --color-btn-secundario-hover: #c82333;
+  --color-btn-camara: #007bff;
+  --color-btn-cerrar: #3a5ec0;
+  --color-btn-cerrar-hover: #2c4e9c;
+  --color-texto-error: red;
+  --color-texto-titulo: #222;
+  --color-tabla-header: #f2f2f2;
+  --color-tabla-border: #ccc;
+  --color-tabla-fondo: #f9f9f9;
+
+  --fuente-base: "Segoe UI", Arial, sans-serif;
+}
+
+/* ===================== 2. MODAL GENERAL ===================== */
 .velo {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(200, 200, 200, 0.525);
-    z-index: 9;
-    display: none;
-    align-items: center;
-    justify-content: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--color-velo-bg);
+  z-index: 9;
+  display: none;
+  align-items: center;
+  justify-content: center;
 }
 
 .modal {
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    border-radius: 15px;
-    background: white;
-    padding: 25px 20px;
-    z-index: 10;
+  box-shadow: 0 4px 15px var(--color-modal-shadow);
+  border-radius: 10px;
+  background: var(--color-modal-bg);
+  padding: 15px 12px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
+
+.modal h2{
+  display: flex;
+  justify-content: center;
+}
+
+
+#iframeCurriculum {
+    width: 500px;   
+    height: 80vh;  
+    border: none; 
+}
+
+
+
+/* Responsive modal general */
+@media (max-width: 600px) {
+  .modal {
+    width: 90%;
+    padding: 12px;
+  }
+}
+
+/* ===================== 3. FORMULARIO MODAL ===================== */
 .modalForm h3 {
   text-align: center;
-  margin-bottom: 18px;
-  font-size: 18px;
-  color: #222;
+  margin-bottom: 12px;
+  font-size: 16px;
+  color: var(--color-texto-titulo);
 }
 
-/* -------------------- CAMPOS EN 2 COLUMNAS -------------------- */
 .modalForm .campos {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 14px 18px;
+  gap: 10px 12px;
 }
 
-/* -------------------- INPUTS Y LABELS -------------------- */
 .modalForm label {
   display: block;
-  margin-bottom: 4px;
-  font-size: 14px;
-  color: #333;
+  margin-bottom: 3px;
+  font-size: 13px;
+  color: var(--color-label);
 }
 
 .modalForm input {
   width: 100%;
-  padding: 7px 9px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 14px;
+  padding: 5px 6px;
+  border: 1px solid var(--color-input-border);
+  border-radius: 4px;
+  font-size: 13px;
   box-sizing: border-box;
 }
 
-/* -------------------- CAMPOS SUELTOS -------------------- */
 .modalForm .archivo,
 .modalForm .fotoPerfil {
-  margin-top: 15px;
+  margin-top: 10px;
 }
 
 .modalForm input[type="file"] {
@@ -61,59 +121,51 @@
   padding: 0;
 }
 
-/* -------------------- BOTÓN CÁMARA -------------------- */
 .modalForm #btnAbrirCamara {
-  margin-top: 6px;
-  background: #007bff;
+  margin-top: 4px;
+  background: var(--color-btn-camara);
   color: #fff;
   border: none;
-  padding: 6px 10px;
-  border-radius: 5px;
+  padding: 5px 8px;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 13px;
 }
 
-/* -------------------- BOTONES INFERIORES -------------------- */
 .modalForm .botones {
   display: flex;
   justify-content: center;
-  gap: 12px;
-  margin-top: 22px;
+  gap: 8px;
+  margin-top: 15px;
 }
 
 .modalForm button {
-  border-radius: 5px;
+  border-radius: 4px;
   cursor: pointer;
+  font-size: 13px;
 }
 
 .modalForm #btnGuardarNuevo,
 .modalForm #btnGuardarEditar {
-  width: 120px;
-  padding: 8px 0;
+  width: 100px;
+  padding: 6px 0;
   border: none;
-  font-size: 14px;
   color: #fff;
-  background: #28a745;
+  background: var(--color-btn-primario);
 }
 
 .modalForm .cerrarModal {
-  width: 120px;
-  padding: 8px 0;
+  width: 100px;
+  padding: 6px 0;
   border: none;
-  font-size: 14px;
   color: #fff;
-  background: #dc3545;
+  background: var(--color-btn-secundario);
 }
 
-/* -------------------- RESPONSIVE -------------------- */
+/* Responsive formulario modal */
 @media (max-width: 600px) {
   .modalForm .campos {
     grid-template-columns: 1fr;
-  }
-
-  .modalForm .modal {
-    width: 90%;
-    padding: 20px;
   }
 
   .modalForm .botones {
@@ -125,12 +177,11 @@
   }
 }
 
-
-/* -------------------- MODAL DETALLES ALUMNO -------------------- */
+/* ===================== 4. MODAL DETALLES ALUMNO ===================== */
 .detalles-alumno {
   display: grid;
   grid-template-columns: 1fr 2fr;
-  gap: 20px;
+  gap: 12px;
   align-items: center; 
 }
 
@@ -141,148 +192,144 @@
 }
 
 .contenedor-foto img {
-  max-width: 120px;
+  max-width: 80px;
   height: auto;
-  border-radius: 8px;
+  border-radius: 6px;
   object-fit: cover;
-  border: 2px solid #e0e0e0;
-  padding: 5px;
-  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  padding: 4px;
+  background-color: var(--color-tabla-fondo);
 }
 
-.info-alumno p {
-  margin: 6px 0;
-  font-size: 0.95em;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 4px;
+/* Responsive modal detalles */
+@media (max-width: 600px) {
+  .detalles-alumno {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
 }
 
-.modal h2 {
-  text-align: center;
-  margin-bottom: 15px;
-}
-
+/* ===================== 5. BOTONES CERRAR Y ERRORES ===================== */
 .btn-cerrar {
   display: block;
-  width: 120px;
-  padding: 8px 15px;
-  margin: 15px auto 0;
-  background-color: #3a5ec0;
+  width: 100px;
+  padding: 6px 0;
+  margin: 10px auto 0;
+  background-color: var(--color-btn-cerrar);
   color: #fff;
   border: none;
-  border-radius: 6px;
+  border-radius: 5px;
   cursor: pointer;
 }
 
 .btn-cerrar:hover {
-  background-color: #2c4e9c;
+  background-color: var(--color-btn-cerrar-hover);
 }
 
 span.error {
-    color: red;
-    font-size: 0.9rem;
-    display: block;
+  color: var(--color-texto-error);
+  font-size: 0.8rem;
+  display: block;
 }
 
-
-
-
-/* -------------------- MODAL CARGA MASIVA ALUMNO -------------------- */
+/* ===================== 6. MODAL CARGA MASIVA ALUMNO ===================== */
 #modalCargaAlumnos .modal {
-    width: 400px;
-    max-width: 90%; 
-    text-align: center; 
-    display: flex;
-    flex-direction: column;
-    gap: 15px; 
+  width: 350px;
+  max-width: 90%; 
+  text-align: center; 
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
-
 
 #modalCargaAlumnos input[type="file"] {
-    margin: 0 auto; 
+  margin: 0 auto; 
 }
 
-/* Contenedor para los botones */
 #modalCargaAlumnos .botones {
-    display: flex;
-    justify-content: center; 
-    gap: 15px; 
-    margin-top: 10px;
+  display: flex;
+  justify-content: center; 
+  gap: 8px; 
+  margin-top: 8px;
 }
 
-/* Botones individuales */
 #modalCargaAlumnos .botones button {
-    width: 150px;
-    padding: 8px 0;
-    font-size: 14px;
-    border-radius: 6px;
-    cursor: pointer;
+  width: 120px;
+  padding: 6px 0;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 13px;
 }
 
-/* Colores */
 #modalCargaAlumnos #btnLeerCSV {
-    background-color: #28a745;
-    color: #fff;
-    border: none;
+  background-color: var(--color-btn-primario);
+  color: #fff;
+  border: none;
 }
 
 #modalCargaAlumnos #btnLeerCSV:hover {
-    background-color: #218838;
+  background-color: var(--color-btn-primario-hover);
 }
 
 #modalCargaAlumnos #btnCancelarCarga {
-    background-color: #dc3545;
-    color: #fff;
-    border: none;
+  background-color: var(--color-btn-secundario);
+  color: #fff;
+  border: none;
 }
 
 #modalCargaAlumnos #btnCancelarCarga:hover {
-    background-color: #c82333;
+  background-color: var(--color-btn-secundario-hover);
 }
 
+/* Responsive modal carga masiva */
+@media (max-width: 600px) {
+  #modalCargaAlumnos .modal {
+    width: 90%;
+  }
 
-/* -------------------- MODAL CARGA MASIVA ALUMNO PREVIEW-------------------- */
-#modalCargaAlumnos .modal {
-    width: 500px;
-    max-width: 90%;
-    max-height: 90vh; 
-    overflow-y: auto; 
-    text-align: center;
-    display: flex;
+  #modalCargaAlumnos .botones {
     flex-direction: column;
-    gap: 15px;
+  }
+
+  #modalCargaAlumnos .botones button {
+    width: 100%;
+  }
 }
 
+/* ===================== 7. PREVIEW TABLA CARGA MASIVA ===================== */
 #modalCargaAlumnos .contenido {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    overflow-x: auto; 
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-x: auto; 
 }
 
 #tablaPreview {
-    border-collapse: collapse;
-    width: 100%;
-    margin-top: 10px;
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 8px;
 }
 
 #tablaPreview th, #tablaPreview td {
-    border: 1px solid #ccc;
-    padding: 6px;
-    text-align: left;
+  border: 1px solid var(--color-tabla-border);
+  padding: 4px;
+  text-align: left;
 }
 
 #tablaPreview th {
-    background-color: #f2f2f2;
-    position: sticky;
-    top: 0;
+  background-color: var(--color-tabla-header);
+  position: sticky;
+  top: 0;
 }
 
+/* ===================== 8. ELIMINAR ALUMNO ===================== */
 
+.contenedor-eliminar {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
 
-
-
-
-
-
-
+#modalRegistro h3{
+    text-align: center;
+}

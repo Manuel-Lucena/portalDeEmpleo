@@ -3,22 +3,20 @@ require_once __DIR__ . "/../vendor/autoload.php";
 include_once __DIR__ . "/../Downloads/mi_autoload.php";
 
 use Helpers\Sesion;
-use Helpers\login;
+use Helpers\Login;
+use Services\PDFService;
 use Controllers\LoginController;
 use Controllers\RegistroEmpresaController;
 use Controllers\InicioController;
-use Controllers\AlumnoSolicitudController;
-use Controllers\AlumnoOfertaController;
-use Controllers\CrearOfertaControllerController;
+use Controllers\SolicitudController;
+use Controllers\OfertaController;
 use Controllers\PanelAdminController;
 use Controllers\EditarEmpresaController;
 use Controllers\EliminarEmpresaController;
 use Controllers\DetallesEmpresaController;
 use Controllers\GestionOfertaController;
-use Helpers\Security;
 use Repositorys\RepoUser;
-use Repositorys\RepoToken;
-
+use Services\PDFServices;
 
 Sesion::abrirsesion();
 
@@ -33,9 +31,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['accion'] ?? '') == 'Login'
     $usuario = RepoUser::verificarUsuario($username, $password);
     if ($usuario) {
         Login::login($usuario);
-
-        $token = Security::generarToken();
-        Security::guardarTokenEnDB($usuario['id'], $token);
         header("Location: Index.php?menu=Inicio");
         exit;
     }
@@ -75,7 +70,7 @@ if (!Login::estaLogeado()) {
         case 'GestionOferta':
             $idEmpresa = $_GET['idEmpresa'] ?? null;
             $accion = $_GET['accion'] ?? ($_POST['accion'] ?? null);
-            $idOferta = $_POST['id'] ?? $_GET['id'] ?? null; // <- cambio importante
+            $idOferta = $_POST['id'] ?? $_GET['id'] ?? null;
 
             $controller = new GestionOfertaController();
 
@@ -95,20 +90,28 @@ if (!Login::estaLogeado()) {
         case 'Oferta':
 
 
-            $controller = new AlumnoOfertaController();
+            $controller = new OfertaController();
             $controller->index();
             break;
         case 'Solicitud':
 
 
-            $controller = new AlumnoSolicitudController();
+            $controller = new SolicitudController();
             $controller->index();
             break;
 
+        case 'GenerarPDFAlumnos':
+    
+            PDFServices::generarListadoAlumnos();
+            break;
 
         case 'PanelAdmin':
+            if(Login::getRol() == 1){
             $controller = new PanelAdminController();
             $controller->index();
+            } else {
+                 header("Location: Index.php");
+            }
             break;
 
 

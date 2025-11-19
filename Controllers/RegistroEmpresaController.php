@@ -55,16 +55,16 @@ class RegistroEmpresaController
 
     public function procesarRegistro()
     {
-      
 
-        $nombreEmpresa     = $_POST['nombreEmpresa'] ?? '';
-        $usuario           = $_POST['nombreUsuario'] ?? '';
-        $contrasena        = $_POST['contrasena'] ?? '';
-        $email             = $_POST['email'] ?? '';
-        $telefono          = $_POST['telefono'] ?? '';
-        $personaContacto   = $_POST['personaContacto'] ?? '';
-        $direccion         = $_POST['direccion'] ?? '';
-        $logo              = $_FILES['logoEmpresa'] ?? null;
+
+        $nombreEmpresa = $_POST['nombreEmpresa'] ?? '';
+        $usuario = $_POST['nombreUsuario'] ?? '';
+        $contrasena = $_POST['contrasena'] ?? '';
+        $email = $_POST['email'] ?? '';
+        $telefono = $_POST['telefono'] ?? '';
+        $personaContacto = $_POST['personaContacto'] ?? '';
+        $direccion = $_POST['direccion'] ?? '';
+        $logo = $_FILES['logoEmpresa'] ?? null;
 
         $user = new User($usuario, password_hash($contrasena, PASSWORD_DEFAULT), 2);
         $empresa = new Empresa(null, null, $nombreEmpresa, $telefono, $direccion, $personaContacto, $email, null);
@@ -82,7 +82,7 @@ class RegistroEmpresaController
         }
 
         header("Location: ../public/index.php?menu=PanelAdmin");
-        exit;
+
     }
 
     public function procesarRegistroCandidata()

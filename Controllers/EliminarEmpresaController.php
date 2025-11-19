@@ -32,6 +32,6 @@ class EliminarEmpresaController {
         }
 
         header("Location: ../public/index.php?menu=PanelAdmin");
-        exit;
+
     }
 }

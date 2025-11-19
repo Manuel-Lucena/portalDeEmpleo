@@ -74,22 +74,17 @@ class RepoUser {
         $stmt->execute([$id]);
     }
 
-  public static function verificarUsuario($nombreUsuario, $password) {
+    
+public static function verificarUsuario($nombreUsuario, $password) {
     $con = DB::getConnection();
     $stmt = $con->prepare("SELECT * FROM USER WHERE nombreUsuario = ?");
     $stmt->execute([$nombreUsuario]);
     $fila = $stmt->fetch(\PDO::FETCH_ASSOC);
 
-    if ($fila) {
-
-        if (password_verify($password, $fila['password'])) {
-            return $fila; 
-        } else {
-            return false; // Contraseña incorrecta
-        }
-    }
-    return false; // Usuario no existe
+    $resultado = ($fila && password_verify($password, $fila['password'])) ? $fila : false;
+    return $resultado;
 }
+
 
 }
 ?>

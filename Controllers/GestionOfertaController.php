@@ -8,7 +8,8 @@ use Models\Oferta;
 use Models\OfertaCiclo;
 use Repositorys\RepoCiclo;
 use Repositorys\RepoOferta;
-
+use Repositorys\RepoEmpresa;
+use Helpers\Login;
 
 class GestionOfertaController {
     private $templates;
@@ -19,17 +20,20 @@ class GestionOfertaController {
 
 
     public function index($idEmpresa) {
-        $ciclos = RepoCiclo::findAll();
+  
+    $idUser = Login::getId();
 
-    
-        $data = [
-            'titulo' => 'Crear Oferta',
-            'idEmpresa' => $idEmpresa,
-            'ciclo' => $ciclos,
-        ];
 
-        echo $this->templates->render('CrearOferta', $data);
-    }
+    $ciclos = RepoCiclo::findAll();
+
+    $data = [
+        'titulo' => 'Crear Oferta',
+        'idEmpresa' => $idEmpresa, 
+        'ciclo' => $ciclos,
+    ];
+
+    echo $this->templates->render('CrearOferta', $data);
+}
 
 
 
@@ -60,9 +64,6 @@ public function saveOferta() {
     $ofertaCiclo = new OfertaCiclo($oferta->getId(), $idCiclo);
 
     RepoOferta::save($oferta, $ofertaCiclo);
-
-
-
 
     header("Location: index.php?menu=Oferta");
 }

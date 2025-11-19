@@ -15,7 +15,7 @@ public static function cerrarsesion(){
 }
 
 public static function leersesion($clave){
-    if(existeclave($clave)){
+    if(self::existeclave($clave)){
         return $_SESSION[$clave];
     } else {
         return false;

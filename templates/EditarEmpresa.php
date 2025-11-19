@@ -13,7 +13,7 @@
       <form method="post" action="index.php?menu=EditarEmpresa" enctype="multipart/form-data" class="form-dos-columnas">
         <input type="hidden" name="idUser" value="<?= $empresa->getIdUser() ?>">
 
-        <!-- Fila 1: Nombre de empresa y Usuario (o Email) -->
+     
         <div class="fila">
           <div class="campo">
             <label for="nombreEmpresa">Nombre de la empresa:</label>
@@ -22,11 +22,11 @@
 
           <div class="campo">
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" value="<?= $empresa->getEmail() ?>" required>
+            <input type="text" id="email" name="email" value="<?= $empresa->getEmail() ?>" required>
           </div>
         </div>
 
-        <!-- Fila 2: Contraseña y Confirmación -->
+    
         <div class="fila">
           <div class="campo">
             <label for="contraseña">Contraseña:</label>
@@ -39,7 +39,6 @@
           </div>
         </div>
 
-        <!-- Fila 3: Teléfono y Persona de contacto -->
         <div class="fila">
           <div class="campo">
             <label for="telefono">Teléfono de contacto:</label>
@@ -52,7 +51,7 @@
           </div>
         </div>
 
-        <!-- Fila 4: Dirección -->
+ 
         <div class="fila">
           <div class="campo span-dos">
             <label for="direccion">Dirección:</label>
@@ -60,14 +59,13 @@
           </div>
         </div>
 
-        <!-- Fila 5: Logo de empresa -->
+
         <div class="fila">
           <div class="campo span-dos">
             <label for="logo">Logo de empresa:</label>
             <input type="file" id="logo" name="logo" accept="image/*">
           </div>
           <div class="campo">
-            <!-- Columna vacía para mantener la alineación -->
           </div>
         </div>
 

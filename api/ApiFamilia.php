@@ -1,27 +1,33 @@
 <?php
 header('Content-Type: application/json');
 require_once '../Downloads/mi_autoload.php';
+
 use Repositorys\RepoFamilia;
+
+$statusCode = 200;
+$response = [];
 
 try {
     if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
-        http_response_code(405);
-        echo json_encode(["error" => "Método no permitido"]);
-        exit;
-    }
+        $statusCode = 405;
+        $response = ["error" => "Método no permitido"];
+    } else {
+        $familias = RepoFamilia::findAll();
+        $arr = [];
 
-    $familias = RepoFamilia::findAll();
-    $arr = [];
-    foreach ($familias as $f) {
-        $arr[] = [
-            "id" => $f->getId(),
-            "nombre" => $f->getNombre()
-        ];
-    }
-    echo json_encode($arr);
+        foreach ($familias as $f) {
+            $arr[] = [
+                "id" => $f->getId(),
+                "nombre" => $f->getNombre()
+            ];
+        }
 
-} catch (\Exception $e) {
-    http_response_code(500);
-    echo json_encode(["error" => $e->getMessage()]);
+        $response = $arr;
+    }
+} catch (Exception $e) {
+    $statusCode = 500;
+    $response = ["error" => $e->getMessage()];
 }
-?>
+
+http_response_code($statusCode);
+echo json_encode($response);

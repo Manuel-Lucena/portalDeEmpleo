@@ -10,7 +10,7 @@ const Validator = {
     },
 
     telefono: function(value) {
-        if (!value) return true; // opcional
+        if (!value) return true;
         const regex = /^\d{9}$/;
         return regex.test(value);
     },

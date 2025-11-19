@@ -5,7 +5,7 @@ namespace Repositorys;
 class DB {
 
     private static $con = null;
-    private static $host = 'localhost';
+    private static $host = 'mysql'; //localhost
     private static $user = 'root';
     private static $pass = 'root';
     private static $db   = 'portaldeempleo';

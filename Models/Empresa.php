@@ -3,8 +3,8 @@
 namespace Models;
 
 class Empresa {
-    private $id;            // id de la tabla EMPRESA_CANDIDATA o EMPRESA
-    private $idUser;        // id del usuario asociado
+    private $id;           
+    private $idUser;      
     private $nombreEmpresa;
     private $telefono;
     private $direccion;

@@ -1,27 +1,55 @@
+/* =====================================================
+   ÍNDICE
+   1. Tokens de colores y tipografía
+   2. General
+   3. Header
+   4. Footer
+   5. Modal
+   6. Menu Responsive
+===================================================== */
+
+/* ====================== 1. Tokens ====================== */
+:root {
+  /* Colores */
+  --color-header-bg: #5c5c5c;
+  --color-footer-bg: #685151;
+  --color-footer-text: #fff;
+  --color-texto-nav: #000;
+  --color-btn-login-bg: #0077cc;
+  --color-btn-login-text: #fff;
+  --color-velo-bg: rgba(200,200,200,0.5);
+  --color-modal-bg: #fff;
+  --color-modal-shadow: rgba(0,0,0,0.1);
+
+  /* Tipografía */
+  --fuente-base: "Segoe UI", Arial, sans-serif;
+  --fuente-bold: 700;
+}
+
+/* ====================== 2. General ====================== */
 body {
   margin: 0;
+  font-family: var(--fuente-base);
 }
 
-/* ===== Header ===== */
+/* ====================== 3. Header ====================== */
 header {
   display: flex;
-  align-items: center;       
-  justify-content: space-between;  
-  background-color: #5c5c5c;
-  height: 100px;
-  padding: 0 20px;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--color-header-bg);
+  height: 70px;
+  padding: 0 15px;
 }
 
-
 .logo {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   object-fit: contain;
 }
 
-
 .menu-container {
-  flex: 1;                       
+  flex: 1;
   display: flex;
   justify-content: center;
 }
@@ -29,64 +57,53 @@ header {
 nav ol {
   list-style: none;
   display: flex;
-  gap: 60px;
+  gap: 30px;
   margin: 0;
   padding: 0;
 }
 
 nav li {
-  font-size: 1.2rem;
-  font-weight: bold;
-
+  font-size: 1rem;
+  font-weight: var(--fuente-bold);
 }
 
-
-
-nav a{
-    text-decoration: none;
-    color: #000000;
+nav a {
+  text-decoration: none;
+  color: var(--color-texto-nav);
 }
-
 
 .btn-login {
-  padding: 10px 20px;
-  background-color: #0077cc;
-  color: #fff;
+  padding: 6px 12px;
+  background-color: var(--color-btn-login-bg);
+  color: var(--color-btn-login-text);
   text-decoration: none;
   border-radius: 5px;
-  font-weight: bold;
+  font-weight: var(--fuente-bold);
 }
 
+/* ====================== 4. Footer ====================== */
 footer {
-  background-color: #685151;
-  color: #fff;
-  padding: 40px 20px 20px 20px;
+  background-color: var(--color-footer-bg);
+  color: var(--color-footer-text);
+  padding: 20px 15px;
 }
 
 .footer-contenido {
   display: flex;
   justify-content: space-between;
-  max-width: 1200px;
+  max-width: 1100px;
   margin: 0 auto;
-
-}
-
-
-.footer-izquierda {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
 }
 
 .footer-logo {
-  width: 120px;
+  width: 100px;
   height: auto;
-    margin-right: 15px;
+  margin-right: 10px;
 }
 
 .footer-redes a {
-  margin-right: 15px;
-  color: #000000;
+  margin-right: 10px;
+  color: var(--color-texto-nav);
   text-decoration: none;
 }
 
@@ -98,30 +115,75 @@ footer {
 }
 
 .footer-derecha a {
-  color: #000000;
+  color: var(--color-texto-nav);
   text-decoration: none;
 }
 
-
-
+/* ====================== 5. Modal ====================== */
 .velo {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(200, 200, 200, 0.525);
-    z-index: 9;
-    display: none;
-    align-items: center;
-    justify-content: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--color-velo-bg);
+  z-index: 9;
+  display: none;
+  align-items: center;
+  justify-content: center;
 }
 
 .modal {
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    border-radius: 15px;
-    background: white;
-    padding: 25px 20px;
-    z-index: 10;
+  box-shadow: 0 4px 20px var(--color-modal-shadow);
+  border-radius: 15px;
+  background: var(--color-modal-bg);
+  padding: 20px;
+  z-index: 10;
 }
 
+/* ====================== 6. Menu Responsive ====================== */
+.menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  header {
+    height: auto;
+    padding: 10px;
+    flex-wrap: wrap;
+  }
+
+  .menu-container {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  nav ol {
+    flex-direction: column;
+    width: 100%;
+    gap: 15px;
+    padding: 0;
+    display: none;
+    background: var(--color-header-bg);
+    margin-top: 10px;
+  }
+
+  nav ol.mostrar {
+    display: flex;
+  }
+
+  .menu-btn {
+    display: block;
+  }
+
+  .btn-login {
+    margin-top: 10px;
+    padding: 5px 10px;
+    font-size: 0.9rem;
+  }
+}

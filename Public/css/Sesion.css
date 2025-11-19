@@ -1,86 +1,126 @@
-/* ====== FONDO GENERAL ====== */
+/* =====================================================
+   ÍNDICE
+   1. Variables (tokens)
+   2. Fondo general
+   3. Contenedor registro
+   4. Tarjeta registro
+   5. Formulario registro
+   6. Botón registro
+   7. Login
+   8. Detalles empresa
+   9. Ofertas
+   10. Confirmar Eliminacion
+   11. Utilidades
+===================================================== */
+
+/* ====================== 1. VARIABLES (TOKENS) ====================== */
+:root {
+  --color-primario: #4e73df;
+  --color-secundario: #1cc88a;
+  --color-texto: #333;
+  --color-fondo: #fff;
+  --border-radius: 10px;
+  --max-width-box: 600px;
+}
+
+/* ====================== 2. FONDO GENERAL ====================== */
 body {
-  background: linear-gradient(135deg, #4e73df, #1cc88a);
-  height: 100vh;
+  background: linear-gradient(135deg, var(--color-primario), var(--color-secundario));
   margin: 0;
   display: flex;
-  flex-direction: column; /* combinado para login y otras tarjetas */
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   font-family: "Segoe UI", Arial, sans-serif;
   text-align: center;
+  height: 100vh;
 }
 
-/* ====== CONTENEDOR DE REGISTRO ====== */
+/* ====================== 3. CONTENEDOR REGISTRO ====================== */
 .registro-container {
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 15px;
+  padding: 12px;
 }
 
-/* ====== TARJETA DE REGISTRO ====== */
+/* ====================== 4. TARJETA REGISTRO ====================== */
 .registro-box {
-  background: #ffffff;
-  padding: 25px 30px;
-  border-radius: 10px;
+  background: var(--color-fondo);
+  padding: 20px 20px;
+  border-radius: var(--border-radius);
   width: 100%;
-  max-width: 600px;
+  max-width: var(--max-width-box);
   box-sizing: border-box;
 }
 
 .registro-box h2 {
   text-align: center;
-  color: #4e73df;
-  margin-bottom: 15px;
-  font-size: 1.5em;
+  color: var(--color-primario);
+  margin-bottom: 10px;
+  font-size: 1.3em;
 }
 
-/* ====== FORMULARIO DE REGISTRO ====== */
+/* Responsive TARJETA REGISTRO */
+@media (max-width: 768px) {
+  .registro-box {
+    max-width: 90%;
+    padding: 15px;
+  }
+}
+
+/* ====================== 5. FORMULARIO REGISTRO ====================== */
 .form-dos-columnas {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px;
 }
 
 .fila {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 15px 20px;
+  gap: 10px 12px;
 }
 
 .campo label {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
   font-weight: 600;
-  font-size: 0.9em;
+  font-size: 0.85em;
 }
 
 .campo input {
   border: 1px solid #ccc;
   border-radius: 5px;
   width: 100%;
-  padding: 7px;
+  padding: 6px;
   box-sizing: border-box;
 }
 
-/* ====== BOTÓN DE REGISTRO ====== */
+/* Responsive FORMULARIO REGISTRO */
+@media (max-width: 768px) {
+  .fila {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ====================== 6. BOTÓN REGISTRO ====================== */
 .registro-box input[type="submit"] {
-  margin-top: 10px;
-  padding: 10px 0;
-  background: #4e73df;
+  margin-top: 8px;
+  padding: 8px 0;
+  background: var(--color-primario);
   color: #fff;
   border: none;
-  border-radius: 6px;
-  width: 150px;
+  border-radius: 5px;
+  width: 130px;
   align-self: center;
   cursor: pointer;
 }
 
 .registro-box p {
   text-align: center;
-  margin-top: 10px;
-  font-size: 0.9em;
+  margin-top: 8px;
+  font-size: 0.85em;
 }
 
 .registro-box a {
@@ -88,91 +128,91 @@ body {
   text-decoration: none;
 }
 
-/* ====== LOGIN ====== */
+/* ====================== 7. LOGIN ====================== */
 .login-container {
-  height: 100vh;
-  margin: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 100vh;
+  margin: 0;
 }
 
 .login-container h2 {
   color: #fff;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .login-container form {
-  background-color: #fff;
-  padding: 30px 40px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  width: 300px;
+  background-color: var(--color-fondo);
+  padding: 20px 25px;
+  border-radius: var(--border-radius);
+  width: 280px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
 }
 
 .login-container label {
-  margin-top: 10px;
-  margin-bottom: 5px;
-  color: #333;
+  margin-top: 8px;
+  margin-bottom: 4px;
+  color: var(--color-texto);
 }
 
 .login-container input,
 .login-container select {
-  padding: 10px;
+  padding: 8px;
   border: 1px solid #ccc;
-  border-radius: 6px;
+  border-radius: 5px;
 }
 
 .login-container input[type="submit"] {
-  margin-top: 20px;
-  padding: 10px;
-  background-color: #4e73df;
+  margin-top: 15px;
+  padding: 8px;
+  background-color: var(--color-primario);
   color: #fff;
   border: none;
-  border-radius: 6px;
+  border-radius: 5px;
   cursor: pointer;
 }
 
-.login-container p,
-.login-container button,
-.login-container a {
-  margin-top: 10px;
-  text-align: center;
-  display: block;
+/* Responsive LOGIN */
+@media (max-width: 768px) {
+  .login-container form {
+    width: 90%;
+    padding: 15px;
+  }
 }
 
-/* ====== DETALLES DE EMPRESA ====== */
+/* ====================== 8. DETALLES EMPRESA ====================== */
 .contenedor-detalles {
   display: flex;
   justify-content: center;
-  padding: 15px;
+  padding: 12px;
 }
 
 .caja-detalles {
-  background: #fff;
-  padding: 25px 30px;
-  border-radius: 10px;
+  background: var(--color-fondo);
+  padding: 20px 20px;
+  border-radius: var(--border-radius);
   width: 100%;
-  max-width: 600px;
+  max-width: var(--max-width-box);
   box-sizing: border-box;
 }
 
 .caja-detalles h2 {
   text-align: center;
-  color: #4e73df;
-  margin-bottom: 15px;
-  font-size: 1.5em;
+  color: var(--color-primario);
+  margin-bottom: 10px;
+  font-size: 1.3em;
 }
 
 .detalles-entidad {
   display: grid;
   grid-template-columns: 1fr 2fr;
   align-items: center;
-  gap: 20px;
+  gap: 12px;
 }
 
 .contenedor-logo {
@@ -180,12 +220,12 @@ body {
 }
 
 .contenedor-logo img {
-  max-width: 120px;
+  max-width: 100px;
   height: auto;
-  border-radius: 8px;
+  border-radius: 6px;
   object-fit: contain;
   border: 1px solid #e0e0e0;
-  padding: 5px;
+  padding: 4px;
   background-color: #f9f9f9;
 }
 
@@ -194,65 +234,74 @@ body {
 }
 
 .informacion-detalles p {
-  margin: 6px 0;
+  margin: 4px 0;
   border-bottom: 1px solid #eee;
-  padding-bottom: 4px;
+  padding-bottom: 3px;
 }
 
 .btn-volver {
   background-color: #3a5ec0;
-  padding: 8px 15px;
-  border-radius: 6px;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
   text-decoration: none;
   color: #fff;
-  margin-top: 15px;
+  margin-top: 10px;
 }
 
-.btn-volver:hover {
-  background: #3a5ec0;
+/* Responsive DETALLES EMPRESA */
+@media (max-width: 768px) {
+  .caja-detalles {
+    max-width: 90%;
+    padding: 15px;
+  }
+
+  .detalles-entidad {
+    grid-template-columns: 1fr;
+  }
 }
 
-/* ====== OFERTAS ====== */
+/* ====================== 9. OFERTAS ====================== */
 .oferta-container {
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 15px;
+  padding: 12px;
 }
 
 .oferta-box {
-  background: #fff;
-  padding: 25px 30px;
-  border-radius: 10px;
+  background: var(--color-fondo);
+  padding: 20px 20px;
+  border-radius: var(--border-radius);
   width: 100%;
-  max-width: 600px;
+  max-width: var(--max-width-box);
   box-sizing: border-box;
 }
 
 .oferta-box h2 {
   text-align: center;
-  color: #4e73df;
-  margin-bottom: 15px;
-  font-size: 1.5em;
+  color: var(--color-primario);
+  margin-bottom: 10px;
+  font-size: 1.3em;
 }
 
 .form-oferta {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px;
 }
 
 .form-oferta .fila {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 15px 20px;
+  gap: 10px 12px;
 }
 
 .form-oferta .campo label {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
   font-weight: 600;
-  font-size: 0.9em;
+  font-size: 0.85em;
 }
 
 .form-oferta .campo input,
@@ -260,7 +309,7 @@ body {
   border: 1px solid #ccc;
   border-radius: 5px;
   width: 100%;
-  padding: 7px;
+  padding: 6px;
   box-sizing: border-box;
 }
 
@@ -269,34 +318,100 @@ body {
 }
 
 .form-oferta button {
-  margin-top: 10px;
-  padding: 10px 0;
-  background: #4e73df;
+  margin-top: 8px;
+  padding: 8px 0;
+  background: var(--color-primario);
   color: #fff;
   border: none;
-  border-radius: 6px;
-  width: 150px;
+  border-radius: 5px;
+  width: 130px;
   align-self: center;
   cursor: pointer;
 }
 
-/* ====== UTILIDADES ====== */
-.span-dos {
-  grid-column: span 2;
-}
-
+/* Responsive OFERTAS */
 @media (max-width: 768px) {
-  .fila {
-    grid-template-columns: 1fr;
-  }
-
-  .registro-box,
   .oferta-box {
     max-width: 90%;
-    padding: 20px;
+    padding: 15px;
   }
 
   .form-oferta .fila {
     grid-template-columns: 1fr;
   }
+}
+
+/* ====================== 10. CONFIRMAR ELIMINACIÓN ====================== */
+.contenedor-eliminar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.caja-eliminar {
+  background: var(--color-fondo);
+  padding: 30px 32px;
+  border-radius: 12px;
+  width: 100%;
+  text-align: center;
+}
+
+.titulo-eliminar {
+  margin-bottom: 18px;
+  font-size: 1.25em;
+  color: #2d2d2d;
+  font-weight: 600;
+}
+
+.form-eliminar {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.botones-eliminar {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+/* BOTONES */
+
+.btn-eliminar {
+  padding: 10px 18px;
+  border-radius: 8px;
+  background: #e63946;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+}
+
+
+
+.btn-cancelar {
+  padding: 10px 18px;
+  border-radius: 8px;
+  background: #e63946;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  .caja-eliminar {
+    max-width: 90%;
+    padding: 24px;
+  }
+
+  .botones-eliminar {
+    flex-direction: column;
+  }
+}
+/* ====================== 11. UTILIDADES ====================== */
+.span-dos {
+  grid-column: span 2;
 }

@@ -15,7 +15,7 @@ const selectCiclo = document.getElementById("selectCicloRegistro"); // nuevo ID
 
     // --- Cargar familias ---
     if (selectFamilia && selectCiclo) {
-        fetch("/portalDeEmpleo/api/apiFamilia.php")
+        fetch("/api/ApiFamilia.php")
             .then(res => res.json())
             .then(familias => {
                 familias.forEach(fam => {
@@ -38,7 +38,7 @@ const selectCiclo = document.getElementById("selectCicloRegistro"); // nuevo ID
                 return;
             }
 
-            fetch(`/portalDeEmpleo/api/apiCiclo.php?idFamilia=${idFamilia}`)
+            fetch(`/api/ApiCiclo.php?idFamilia=${idFamilia}`)
                 .then(res => res.json())
                 .then(ciclos => {
                     selectCiclo.innerHTML = "<option value=''>Seleccione un ciclo</option>";
@@ -82,7 +82,7 @@ const selectCiclo = document.getElementById("selectCicloRegistro"); // nuevo ID
             if (curriculum) formData.append("curriculum", curriculum);
             if (fotoPerfil) formData.append("fotoPerfil", fotoPerfil);
 
-            fetch('/portalDeEmpleo/api/ApiAlumno.php', {
+            fetch('/api/ApiAlumno.php', {
                 method: 'POST',
                 body: formData
             })

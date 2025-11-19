@@ -13,7 +13,7 @@
       Encuentra las mejores oportunidades laborales y talleres para mejorar tus habilidades. 
       Nuestro portal te conecta con empresas y profesionales de tu área.
     </p>
-    <a href="#" class="btn btn-bienvenida">Explora las oportunidades</a>
+    <a href="#" class="btn btn-azul">Explora las oportunidades</a>
   </div>
 </section>
 
@@ -36,7 +36,7 @@
   <div class="contenido-contacto">
     <h2>Conéctate con nosotros</h2>
     <p>Regístrate para recibir notificaciones sobre nuevas ofertas, talleres y noticias importantes.</p>
-    <a href="#" class="btn btn-contacto">Contactar</a>
+    <a href="#" class="btn btn-azul">Contactar</a>
   </div>
 </section>
 

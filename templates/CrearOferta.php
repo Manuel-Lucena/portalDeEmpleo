@@ -9,7 +9,7 @@
     <div class="oferta-box">
         <h2>Crear Nueva Oferta</h2>
 
-        <form method="post" action="index.php?menu=CrearOferta" class="form-oferta">
+        <form method="post" action="index.php?menu=GestionOferta" class="form-oferta">
             <input type="hidden" name="idEmpresa" value="<?= $idEmpresa ?>">
 
             <div class="fila">

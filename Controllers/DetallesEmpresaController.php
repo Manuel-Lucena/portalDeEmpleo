@@ -14,7 +14,7 @@ class DetallesEmpresaController {
     }
 
     public function index($id) {
-        $empresa = RepoEmpresa::findById($id); 
+        $empresa = RepoEmpresa::findByUserId($id); 
         $data = [
             'titulo' => 'Detalles de la Empresa',
             'empresa' => $empresa
