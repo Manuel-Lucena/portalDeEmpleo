@@ -2,7 +2,7 @@
 
 <?php $this->start('css') ?>
 <link rel="stylesheet" href="../Public/css/Paginas.css">
-<link rel="stylesheet" href="../Public/css/Modal.css">
+
 <?php $this->stop() ?>
 
 <?php $this->start('contenido') ?>
@@ -69,7 +69,7 @@
                         <tr>
                             <td><?= $empresa->getNombreEmpresa() ?></td>
                             <td><?= $empresa->getEmail() ?></td>
-                            <td id='tdBotones'>
+                            <td class="tdBotones"'>
                                 <form method="post" action="../public/index.php?menu=DetallesEmpresa">
                                     <input type="hidden" name="idEmpresa" value="<?= $empresa->getIdUser() ?>">
                                     <button type="submit" name="accion" value="detalles" class="btn-verde">Detalles</button>
@@ -117,11 +117,15 @@
                         <tr>
                             <td><?= $empresaC->getNombreEmpresa() ?></td>
                             <td><?= $empresaC->getEmail() ?></td>
-                            <td>
+                            <td class='tdBotones'>
                                 <form method="post" action="../public/index.php?menu=RegistroEmpresa">
                                     <input type="hidden" name="idEmpresa" value="<?= $empresaC->getIdUser() ?>">
+                                   
                                     <button type="submit" name="accion" value="aprobar" class="btn-verde">Aprobar</button>
+                                  
+                                   
                                     <button type="submit" name="accion" value="rechazar" class="btn-rojo">Rechazar</button>
+                                
                                 </form>
                             </td>
                         </tr>

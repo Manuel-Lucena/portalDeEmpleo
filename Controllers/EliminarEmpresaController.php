@@ -18,7 +18,7 @@ class EliminarEmpresaController {
             header("Location: ../public/index.php?menu=PanelAdmin");
         }
 
-        echo $this->templates->render('EliminarEmpresa', [
+        echo $this->templates->render('Empresa/EliminarEmpresa', [
             'idEmpresa' => $idEmpresa
         ]);
     }

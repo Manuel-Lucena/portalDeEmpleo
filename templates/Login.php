@@ -1,8 +1,8 @@
 <?php $this->layout('layout_simple', ['titulo' => 'Iniciar sesión']); ?>
 <?php $this->start('css') ?>
 
-<link rel="stylesheet" href="../Public/css/Sesion.css">
-<link rel="stylesheet" href="../Public/css/Modal.css">
+<link rel="stylesheet" href="../Public/css/Forms.css">
+<link rel="stylesheet" href="../Public/css/Paginas.css">
 <?php $this->stop() ?>
 
 <?php $this->start('contenido') ?>

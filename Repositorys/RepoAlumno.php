@@ -150,7 +150,7 @@ class RepoAlumno
             $alumno->getFoto()
         ]);
 
-        
+
         $alumno->setId($con->lastInsertId());
     }
 
@@ -175,31 +175,48 @@ class RepoAlumno
             $alumno->getId()
         ]);
     }
-
     public static function delete($id)
     {
-        try {
-            $con = DB::getConnection();
+        $con = DB::getConnection();
 
+        try {
+            $con->beginTransaction();
 
             $stmt = $con->prepare("SELECT idUser FROM ALUMNO WHERE id = ?");
             $stmt->execute([$id]);
             $alumno = $stmt->fetch(\PDO::FETCH_ASSOC);
 
             if (!$alumno) {
+                $con->rollBack();
                 return false;
             }
 
+            $idUser = $alumno['idUser'];
 
+      
             $stmt = $con->prepare("DELETE FROM ALUMNO WHERE id = ?");
             $stmt->execute([$id]);
+            $alumnoEliminado = $stmt->rowCount() > 0;
 
+            if (!$alumnoEliminado) {
+                $con->rollBack();
+                return false;
+            }
 
+            
             $stmt = $con->prepare("DELETE FROM USER WHERE id = ?");
-            $stmt->execute([$alumno['idUser']]);
+            $stmt->execute([$idUser]);
+            $userEliminado = $stmt->rowCount() > 0;
 
-            return $stmt->rowCount() > 0;
+            if (!$userEliminado) {
+                $con->rollBack();
+                return false;
+            }
+
+            $con->commit();
+            return true;
         } catch (\PDOException $e) {
+            $con->rollBack();
             error_log("Error en RepoAlumno::delete: " . $e->getMessage());
             throw new \Exception("Error al eliminar el alumno: " . $e->getMessage());
         }

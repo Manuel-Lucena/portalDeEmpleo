@@ -30,7 +30,7 @@ class EditarEmpresaController
             'empresa' => $empresa
         ];
 
-        echo $this->templates->render('EditarEmpresa', $data);
+        echo $this->templates->render('Empresa/EditarEmpresa', $data);
     }
 
 
@@ -62,7 +62,6 @@ class EditarEmpresaController
             RepoEmpresa::update($empresa);
 
             header("Location: index.php?menu=PanelAdmin");
-            exit;
         }
     }
 }

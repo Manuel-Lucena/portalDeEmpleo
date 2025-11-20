@@ -1,7 +1,7 @@
 <?php $this->layout('layout_simple', ['titulo' => 'Editar Empresa']); ?>
 
 <?php $this->start('css') ?>
-<link rel="stylesheet" href="../Public/css/Sesion.css">
+<link rel="stylesheet" href="../Public/css/Forms.css">
 <?php $this->stop() ?>
 
 <?php $this->start('contenido') ?>

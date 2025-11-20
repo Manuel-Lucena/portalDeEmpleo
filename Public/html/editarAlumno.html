@@ -8,32 +8,46 @@
                 <div>
                     <label>Nombre:</label>
                     <input type="text" id="editarNombre" required>
+                    <span class="error" id="errorEditarNombre"></span>
                 </div>
 
                 <div>
                     <label>Email:</label>
                     <input type="email" id="editarEmail" required>
+                    <span class="error" id="errorEditarEmail"></span>
                 </div>
 
-                <div>
+                <div class="campo-password">
                     <label>Nueva contraseña (opcional):</label>
                     <input type="password" id="editarPassword" placeholder="Opcional">
+                    <!-- <button type="button" class="togglePassword">👁️</button> -->
+                    <span class="error" id="errorEditarPassword"></span>
+                </div>
+
+                <div class="campo-password">
+                    <label>Repetir contraseña (opcional):</label>
+                    <input type="password" id="editarRepetirPassword" placeholder="Opcional">
+                    <span class="error" id="errorEditarRepetirPassword"></span>
                 </div>
 
                 <div>
                     <label>Fecha de nacimiento:</label>
                     <input type="date" id="editarFechaNacimiento" required>
+                    <span class="error" id="errorEditarFechaNacimiento"></span>
                 </div>
 
                 <div>
                     <label>Teléfono:</label>
                     <input type="tel" id="editarTelefono">
+                    <span class="error" id="errorEditarTelefono"></span>
                 </div>
 
-                <div>
-                    <label>Dirección:</label>
-                    <input type="text" id="editarDireccion">
-                </div>
+
+            </div>
+            <div>
+                <label>Dirección:</label>
+                <input type="text" id="editarDireccion">
+                <span class="error" id="errorEditarDireccion"></span>
             </div>
 
             <div class="archivo">
@@ -41,11 +55,10 @@
                 <input type="file" id="editarCurriculum">
             </div>
 
-              <div class="archivo">
+            <div class="archivo">
                 <label>Foto de perfil:</label>
                 <input type="file" id="editarFotoPerfil">
             </div>
-
 
             <div class="botones">
                 <button type="button" id="btnGuardarEditar">Guardar cambios</button>

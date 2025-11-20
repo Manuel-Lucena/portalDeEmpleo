@@ -20,6 +20,6 @@ class DetallesEmpresaController {
             'empresa' => $empresa
         ];
 
-        echo $this->templates->render('DetallesEmpresa', $data);
+        echo $this->templates->render('Empresa/DetallesEmpresa', $data);
     }
 }

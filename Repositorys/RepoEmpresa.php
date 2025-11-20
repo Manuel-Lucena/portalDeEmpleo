@@ -180,7 +180,7 @@ class RepoEmpresa
     }
 
 
-      public static function countAll()
+    public static function countAll()
     {
         $con = DB::getConnection();
         $stmt = $con->query("SELECT COUNT(*) AS total FROM EMPRESA");
@@ -189,52 +189,103 @@ class RepoEmpresa
     }
 
 
-   public static function findAllPaginatedByName($limit, $offset, $texto)
-{
-    $con = DB::getConnection();
-    $stmt = $con->prepare("
+    public static function findAllPaginatedByName($limit, $offset, $texto)
+    {
+        $con = DB::getConnection();
+        $stmt = $con->prepare("
         SELECT * FROM EMPRESA 
         WHERE nombreEmpresa LIKE :texto
         LIMIT $limit OFFSET $offset
     ");
 
-    $stmt->bindValue(':texto', "%" . $texto . "%", \PDO::PARAM_STR);
+        $stmt->bindValue(':texto', "%" . $texto . "%", \PDO::PARAM_STR);
 
-    $stmt->execute();
+        $stmt->execute();
 
-    $filas = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-    $empresas = [];
+        $filas = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $empresas = [];
 
-    foreach ($filas as $fila) {
-        $empresas[] = new Empresa(
-            $fila['id'],
-            $fila['idUser'],
-            $fila['nombreEmpresa'],
-            $fila['telefono'],
-            $fila['direccion'],
-            $fila['personaContacto'],
-            $fila['email'],
-            $fila['logo']
-        );
+        foreach ($filas as $fila) {
+            $empresas[] = new Empresa(
+                $fila['id'],
+                $fila['idUser'],
+                $fila['nombreEmpresa'],
+                $fila['telefono'],
+                $fila['direccion'],
+                $fila['personaContacto'],
+                $fila['email'],
+                $fila['logo']
+            );
+        }
+
+        return $empresas;
     }
-
-    return $empresas;
-}
 
 
     public static function countByName($texto)
-{
-    $con = DB::getConnection();
-    $stmt = $con->prepare("
+    {
+        $con = DB::getConnection();
+        $stmt = $con->prepare("
         SELECT COUNT(*) AS total 
         FROM EMPRESA 
         WHERE nombreEmpresa LIKE ?
     ");
 
-    $stmt->execute(["%" . $texto . "%"]);
-    $fila = $stmt->fetch(\PDO::FETCH_ASSOC);
+        $stmt->execute(["%" . $texto . "%"]);
+        $fila = $stmt->fetch(\PDO::FETCH_ASSOC);
 
-    return $fila['total'];
+        return $fila['total'];
+    }
+
+
+    public static function contarOfertas($idEmpresa)
+    {
+        $con = DB::getConnection();
+        $stmt = $con->prepare("SELECT COUNT(*) AS total FROM OFERTA WHERE idEmpresa = ?");
+        $stmt->execute([$idEmpresa]);
+        $fila = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $fila['total'];
+    }
+    public static function contarSolicitudes($idEmpresa)
+    {
+        $con = DB::getConnection();
+        $stmt = $con->prepare("
+        SELECT COUNT(*) AS total
+        FROM SOLICITUD s
+        JOIN OFERTA o ON s.idOferta = o.id
+        WHERE o.idEmpresa = ?
+    ");
+        $stmt->execute([$idEmpresa]);
+        $fila = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $fila['total'];
+    }
+
+    public static function contarSolicitudesPorEstado($idEmpresa)
+    {
+        $con = DB::getConnection();
+        $stmt = $con->prepare("
+        SELECT s.estado, COUNT(*) AS total
+        FROM SOLICITUD s
+        JOIN OFERTA o ON s.idOferta = o.id
+        WHERE o.idEmpresa = ?
+        GROUP BY s.estado
+    ");
+        $stmt->execute([$idEmpresa]);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public static function contarSolicitudesPorOferta($idEmpresa)
+{
+    $con = DB::getConnection();
+    $stmt = $con->prepare("
+        SELECT o.titulo, COUNT(s.id) AS total
+        FROM OFERTA o
+        LEFT JOIN SOLICITUD s ON o.id = s.idOferta
+        WHERE o.idEmpresa = ?
+        GROUP BY o.id
+    ");
+    $stmt->execute([$idEmpresa]);
+    return $stmt->fetchAll(\PDO::FETCH_ASSOC); 
 }
 
 }

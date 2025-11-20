@@ -42,9 +42,9 @@ function cargarSolicitudes() {
                 div.innerHTML = `
                 <h2>${sol.oferta}</h2>
                 <h2>(${sol.empresa})</h2>
-                <p>Alumno: ${sol.alumno}</p>
-                <p>Estado: ${sol.estado}</p>
-                <p>Fecha: ${sol.fechaSolicitud}</p>
+               <p><strong>Alumno:</strong> ${sol.alumno}</p>
+                <p><strong>Estado:</strong> ${sol.estado}</p>
+        <p><strong>Fecha:</strong> ${sol.fechaSolicitud}</p>
                 <input type="hidden" class="id-solicitud" value="${sol.id}">
                 <input type="hidden" class="id-alumno" value="${sol.idAlumno}">
                 <div class="botones-solicitud">
@@ -97,39 +97,39 @@ function asignarEventosSolicitudes() {
 
     // Botones CV
 
-document.querySelectorAll(".btn-cv").forEach(boton => {
-    boton.onclick = () => {
-        const solicitudDiv = boton.closest(".solicitud");
-        const idAlumno = solicitudDiv.querySelector(".id-alumno").value;
+    document.querySelectorAll(".btn-cv").forEach(boton => {
+        boton.onclick = () => {
+            const solicitudDiv = boton.closest(".solicitud");
+            const idAlumno = solicitudDiv.querySelector(".id-alumno").value;
 
-        const modalCv = Modal.crear("modalCv", "html/cv.html", function () {
-            modalCv.mostrar();
-            const iframe = document.getElementById("iframeCurriculum");
-            if (!iframe) return;
+            const modalCv = Modal.crear("modalCv", "html/cv.html", function () {
+                modalCv.mostrar();
+                const iframe = document.getElementById("iframeCurriculum");
+                if (!iframe) return;
 
-            fetch("/api/ApiAlumno.php?id=" + idAlumno, {
-                headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
-            })
-            .then(res => res.json())
-            .then(alumno => {
-                if (!alumno || alumno.error) {
-                    iframe.srcdoc = "<p>No se pudo cargar el CV</p>";
-                } else if (alumno.curriculum && alumno.curriculum.length > 0) {
-                    iframe.src = "data:application/pdf;base64," + alumno.curriculum;
-                } else {
-                    iframe.srcdoc = "<p>No hay CV disponible</p>";
-                }
-            })
-            .catch(err => {
-                console.error("Error al cargar el CV:", err);
-                iframe.srcdoc = "<p>No se pudo cargar el CV</p>";
+                fetch("/api/ApiAlumno.php?id=" + idAlumno, {
+                    headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
+                })
+                    .then(res => res.json())
+                    .then(alumno => {
+                        if (!alumno || alumno.error) {
+                            iframe.srcdoc = "<p>No se pudo cargar el CV</p>";
+                        } else if (alumno.curriculum && alumno.curriculum.length > 0) {
+                            iframe.src = "data:application/pdf;base64," + alumno.curriculum;
+                        } else {
+                            iframe.srcdoc = "<p>No hay CV disponible</p>";
+                        }
+                    })
+                    .catch(err => {
+                        console.error("Error al cargar el CV:", err);
+                        iframe.srcdoc = "<p>No se pudo cargar el CV</p>";
+                    });
+
+                const btnCerrarCv = document.getElementById("btnCancelarCv");
+                if (btnCerrarCv) btnCerrarCv.onclick = () => modalCv.ocultar();
             });
-
-            const btnCerrarCv = document.getElementById("btnCancelarCv");
-            if (btnCerrarCv) btnCerrarCv.onclick = () => modalCv.ocultar();
-        });
-    };
-});
+        };
+    });
 
 
 

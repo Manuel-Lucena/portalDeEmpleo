@@ -1,46 +1,100 @@
 /* =====================================================
-   ÍNDICE
-   1. Variables (tokens)
-   2. Clases base
-   3. Inicio / Bienvenida
-   4. Destacados
-   5. Contacto
-   6. Ofertas
-   7. Panel
-   8. Solicitudes
+    ÍNDICE
+    0. Variables (tokens)
+    1. Globales
+    2. Clases base
+    3. Inicio / Bienvenida
+    4. Destacados
+    5. Contacto
+    6. Ofertas
+    7. Panel
+    8. Modal
+        8.1 Modal nuevo alumno
+        8.2 Modal carga masiva
+        8.3 Preview tabla carga masiva
+        8.4 Modal detalles alumno
+        8.5 Botones cerrar y errores
+        8.6 Eliminar alumno
+        8.7 Registro alumno
+    9. Estadísticas
+    10. Solicitudes
 ===================================================== */
 :root {
-  /* Colores */
-  --color-primario: #0077cc;
-  --color-secundario: #28a745;
-  --color-rojo: #dc3545;
-  --color-amarillo: rgb(255, 208, 0);
-  --color-corazon-inactivo: #a3a7a4;
-  --color-corazon-activo: rgb(255, 0, 157);
-  --color-fondo-oferta: #dbd1d1;
-  --color-fondo-solicitud: #cac5c5ab;
-  --color-fondo-panel: #fff;
-  --color-borde-panel: #ddd;
-  --color-hover-panel: #f1faff;
-  --color-texto: #333;
-  --color-texto-secundario: #555;
-  --color-borde-tabla: #e6f0ff;
-  --color-primario-hover: #005fa3;      
-  --color-secundario-hover: #1f7e34; 
-  --color-rojo-hover: #b02a37;          
-  --color-amarillo-hover: #e6c200; 
 
-  /* Tipografías */
-  --fuente-base: "Segoe UI", Arial, sans-serif;
-  --fuente-secundaria: "Verdana", Geneva, sans-serif;
-  --fuente-titulo: "Tahoma", Geneva, sans-serif;
+    --color-primario: #0077cc;
+    --color-secundario: #28a745;
+    --color-rojo: #dc3545;
+    --color-amarillo: rgb(255, 208, 0);
 
-  /* Spacings */
-  --padding-base: 8px 16px;
-  --padding-card: 20px;
-  --padding-section: 60px 20px;
-  --border-radius: 6px;
+
+    --color-corazon-inactivo: #a3a7a4;
+    --color-corazon-activo: rgb(255, 0, 157);
+
+
+    --color-fondo-oferta: #dbd1d1;
+    --color-fondo-solicitud: #cac5c5ab;
+    --color-fondo-panel: #fff;
+    --color-borde-panel: #ddd;
+    --color-hover-panel: #f1faff;
+
+    --color-texto: #333;
+    --color-texto-secundario: #555;
+    --color-texto-titulo: #222;
+    --color-texto-nav: #000;
+    --color-texto-error: red;
+
+
+    --color-borde-tabla: #e6f0ff;
+    --color-tabla-border: #ccc;
+    --color-tabla-header: #f2f2f2;
+    --color-tabla-fondo: #f9f9f9;
+
+
+    --color-primario-hover: #005fa3;
+    --color-secundario-hover: #1f7e34;
+    --color-rojo-hover: #b02a37;
+    --color-amarillo-hover: #e6c200;
+
+
+    --color-header-bg: #5c5c5c;
+    --color-footer-bg: #685151;
+    --color-footer-text: #fff;
+
+
+    --color-btn-login-bg: #0077cc;
+    --color-btn-login-text: #fff;
+    --color-btn-camara: #007bff;
+    --color-btn-primario: #28a745;
+    --color-btn-secundario: #dc3545;
+    --color-btn-cerrar: #3a5ec0;
+    --color-btn-cerrar-hover: #2c4e9c;
+
+
+    --color-velo-bg: rgba(200, 200, 200, 0.5);
+    --color-modal-bg: #fff;
+    --color-modal-shadow: rgba(0, 0, 0, 0.1);
+
+
+    --fuente-base: "Segoe UI", Arial, sans-serif;
+    --fuente-secundaria: "Verdana", Geneva, sans-serif;
+    --fuente-titulo: "Tahoma", Geneva, sans-serif;
+
+
+    --padding-base: 8px 16px;
+    --padding-card: 20px;
+    --padding-section: 60px 20px;
+    --border-radius: 6px;
 }
+
+
+/* ====================== GLOBALES ====================== */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+}
+
 
 /* ====================== CLASES BASE ====================== */
 .btn {
@@ -77,13 +131,12 @@
 .btn-corazon {
     background-color: transparent;
     color: var(--color-corazon-inactivo);
-    font-size: 1.2rem;
+    font-size: 1.2em;
 
 }
 
-
 .btn-azul:hover {
-    background-color: var(--color-primario-hover); 
+    background-color: var(--color-primario-hover);
 
 }
 
@@ -99,14 +152,186 @@
 
 .btn-amarillo:hover {
     background-color: var(--color-amarillo-hover);
-    
+
 }
-
-
 
 .btn-corazon.activo {
     color: var(--color-corazon-activo);
 }
+
+@media (max-width: 600px) {
+    .btn {
+        width: 100%;       
+        min-width: auto; 
+        padding: 6px 12px; 
+    }
+}
+
+/* ====================== HEADER ====================== */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--color-header-bg);
+    height: 70px;
+    padding: 0 15px;
+    position: relative;
+    z-index: 1000;
+}
+
+.logo {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+.menu-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+nav ol {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+}
+
+nav li {
+    font-size: 1.3em;
+    font-weight: var(--fuente-bold, 700);
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--color-texto-nav);
+}
+
+.btn-login {
+    padding: 6px 12px;
+    background-color: var(--color-btn-login-bg);
+    color: var(--color-btn-login-text);
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: var(--fuente-bold, 700);
+}
+
+.menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #fff;
+}
+
+
+.menu-container .cerrar-menu {
+    display: none;
+}
+
+
+@media (max-width: 768px) {
+    header {
+        height: auto;
+        padding: 10px;
+        flex-wrap: wrap;
+        position: relative;
+    }
+
+    .menu-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: var(--color-header-bg);
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 999;
+        gap: 40px;
+    }
+
+    nav ol {
+        flex-direction: column;
+        gap: 20px;
+        padding: 0;
+    }
+
+    .menu-container.mostrar {
+        display: flex;
+    }
+
+    .menu-btn {
+        display: block;
+    }
+
+
+    .menu-container.mostrar .cerrar-menu {
+        display: block;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 2em;
+        background: none;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+    }
+}
+
+/* ====================== FOOTER ====================== */
+footer {
+    background-color: var(--color-footer-bg);
+    color: var(--color-footer-text);
+    padding: 20px 15px;
+}
+
+
+.footer-contenido {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1100px;
+    margin: 0 auto;
+    align-items: center;
+
+}
+
+.footer-izquierda {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.footer-logo {
+    width: 100px;
+    height: auto;
+}
+
+.footer-redes a {
+    margin-right: 10px;
+    color: var(--color-texto-nav);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer-derecha ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-derecha a {
+    color: var(--color-texto-nav);
+    text-decoration: none;
+}
+
+
 /* ====================== INICIO / BIENVENIDA ====================== */
 .bienvenida {
     background-color: #f5f5f5;
@@ -116,13 +341,13 @@
 }
 
 .bienvenida h1 {
-    font-size: 2.5rem;
+    font-size: 2.5em;
     margin-bottom: 20px;
     font-family: var(--fuente-titulo);
 }
 
 .bienvenida p {
-    font-size: 1.2rem;
+    font-size: 1.2em;
     margin-bottom: 30px;
     color: var(--color-texto-secundario);
 }
@@ -132,11 +357,13 @@
     .bienvenida {
         padding: 40px 15px;
     }
+
     .bienvenida h1 {
-        font-size: 2rem;
+        font-size: 2em;
     }
+
     .bienvenida p {
-        font-size: 1rem;
+        font-size: 1em;
     }
 }
 
@@ -163,7 +390,7 @@
 
 .destacados .contenedor-destacados p {
     margin-top: 10px;
-    font-size: 1.1rem;
+    font-size: 1.1em;
     color: var(--color-texto);
 }
 
@@ -174,6 +401,7 @@
         align-items: center;
         gap: 20px;
     }
+
     .destacados .contenedor-destacados {
         max-width: 100%;
     }
@@ -187,13 +415,13 @@
 }
 
 .contacto h2 {
-    font-size: 2rem;
+    font-size: 2em;
     margin-bottom: 20px;
     color: var(--color-primario);
 }
 
 .contacto p {
-    font-size: 1.2rem;
+    font-size: 1.2em;
     margin-bottom: 30px;
     color: var(--color-texto-secundario);
 }
@@ -203,45 +431,63 @@
     .contacto {
         padding: 40px 15px;
     }
+
     .contacto h2 {
-        font-size: 1.5rem;
+        font-size: 1.5em;
     }
+
     .contacto p {
-        font-size: 1rem;
+        font-size: 1em;
     }
 }
-
 /* ====================== OFERTAS ====================== */
 .oferta-section {
     padding: 40px 20px;
     max-width: 1200px;
     margin: 0 auto;
+    text-align: center;
 }
 
 .oferta-section h1 {
     display: flex;
     justify-content: center;
     color: var(--color-primario);
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
+
+.oferta-section p {
+    margin-bottom: 30px;
+    color: var(--color-texto-secundario);
+    font-size: 1.1em;
+}
+
 
 .contenedor-crear-oferta {
     display: flex;
     justify-content: center;
-    margin: 30px 0;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
 }
+
+.contenedor-crear-oferta a {
+    text-decoration: none;
+}
+
+
 .oferta-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; /* centra las tarjetas */
+    justify-content: center;
     gap: 20px;
 }
+
 
 .oferta-card {
     background-color: var(--color-fondo-oferta);
     padding: var(--padding-card);
     border-radius: 10px;
-    flex: 0 0 300px; /* ancho fijo, no crece ni se encoge */
+    flex: 0 0 300px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -249,35 +495,66 @@
 
 
 .oferta-card h2 {
-    font-size: 1.5rem;
+    font-size: 1.5em;
     margin-bottom: 10px;
     color: var(--color-primario);
     text-align: center;
     font-family: var(--fuente-titulo);
 }
 
+
 .oferta-card p {
     color: var(--color-texto);
     flex-grow: 1;
+    margin: 10px 0;
+    line-height: 1.5; 
 }
+
 
 .botones-oferta {
     display: flex;
-    justify-content:space-evenly;
+    justify-content: space-evenly;
+    gap: 10px;
     margin-top: auto;
+}
+
+.botones-oferta button {
+    min-width: 120px;
 }
 
 /* Responsive Ofertas */
 @media (max-width: 768px) {
+
+
     .oferta-container {
         flex-direction: column;
         align-items: center;
+        gap: 20px;
     }
+
     .oferta-card {
-        width: 100%; 
+        width: 100%;
         max-width: 100%;
     }
+
+    .contenedor-crear-oferta {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+
+    .botones-oferta {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .botones-oferta button {
+        width: 100%;
+        box-sizing: border-box;
+    }
 }
+
 
 
 /* ====================== PANEL ====================== */
@@ -287,7 +564,7 @@ main {
     padding: 0 20px;
 }
 
-#tdBotones {
+.tdBotones {
     display: flex;
     flex-wrap: wrap;
 }
@@ -301,7 +578,7 @@ main {
 .gestion-alumnos h1 {
     margin-bottom: 20px;
     color: var(--color-primario);
-    font-size: 1.8rem;
+    font-size: 1.8em;
     font-family: var(--fuente-titulo);
 }
 
@@ -317,8 +594,6 @@ main {
     align-items: center;
     gap: 15px;
 }
-
-
 
 thead {
     background-color: var(--color-borde-tabla);
@@ -367,15 +642,570 @@ a {
     main {
         padding: 0 10px;
     }
+
     th,
     td {
         padding: 6px 8px;
     }
-    #tdBotones {
+
+    .tdBotones {
         flex-direction: column;
         gap: 5px;
     }
 }
+
+/* ===================== 8. MODAL ===================== */
+/* -------- ESTILOS GENERALES MODAL -------- */
+.velo {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--color-velo-bg);
+    z-index: 9;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal {
+    box-shadow: 0 4px 15px var(--color-modal-shadow);
+    border-radius: 10px;
+    background: var(--color-modal-bg);
+    padding: 15px 12px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+       overflow-y: auto; 
+}
+
+.modal h2 {
+    display: flex;
+    justify-content: center;
+}
+
+/* -------- 8.1 MODAL NUEVO ALUMNO -------- */
+#modalNuevoAlumno .modal {
+    width: 800px;
+    max-width: 90vw;
+    padding: 25px;
+}
+
+#modalNuevoAlumno .modal h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    color: var(--color-primario);
+}
+
+#modalNuevoAlumno .modalForm .campos {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 15px 20px;
+}
+
+#modalNuevoAlumno .modalForm label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.95em;
+    color: var(--color-label);
+    font-weight: 500;
+}
+
+#modalNuevoAlumno .modalForm input,
+#modalNuevoAlumno .modalForm select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--color-input-border);
+    border-radius: 6px;
+    font-size: 0.95em;
+    box-sizing: border-box;
+}
+
+#modalNuevoAlumno .modalForm .archivo,
+#modalNuevoAlumno .modalForm .fotoPerfil {
+    grid-column: 1 / -1;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+#modalNuevoAlumno .modalForm .archivo label,
+#modalNuevoAlumno .modalForm .fotoPerfil label {
+    font-size: 1em;
+    margin-bottom: 8px;
+}
+
+#modalNuevoAlumno .modalForm input[type="file"] {
+    border: none;
+    padding: 8px 0;
+}
+
+#modalNuevoAlumno .modalForm .botones {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+#modalNuevoAlumno .modalForm button {
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    padding: 10px 25px;
+    min-width: 120px;
+}
+
+#modalNuevoAlumno .modalForm #btnGuardarNuevo {
+    border: none;
+    color: #fff;
+    background: var(--color-btn-primario);
+}
+
+#modalNuevoAlumno .modalForm .cerrarModal {
+    border: none;
+    color: #fff;
+    background: var(--color-btn-secundario);
+}
+
+#modalNuevoAlumno span.error {
+    color: var(--color-texto-error);
+    font-size: 0.85em;
+    display: block;
+    margin-top: 4px;
+}
+
+@media (max-width: 768px) {
+#modalNuevoAlumno .modal {
+    max-height: 90vh;
+    overflow-y: auto; 
+    width: 800px;
+    max-width: 100%;
+    border-radius: 10px;
+    padding: 25px;
+    box-sizing: border-box;
+}
+
+    #modalNuevoAlumno .modalForm .campos {
+        grid-template-columns: 1fr; 
+        gap: 10px 0;
+    }
+
+    #modalNuevoAlumno .modalForm .archivo,
+    #modalNuevoAlumno .modalForm .fotoPerfil {
+        margin-top: 15px;
+        padding-top: 15px;
+    }
+
+    #modalNuevoAlumno .modalForm .botones {
+   flex-direction: row;
+        gap: 10px;
+    }
+
+    #modalNuevoAlumno .modalForm button {
+        width: 100%;
+        min-width: auto;
+    }
+
+    #modalNuevoAlumno .modalForm input,
+    #modalNuevoAlumno .modalForm select,
+    #modalNuevoAlumno .modalForm input[type="file"] {
+        font-size: 0.9em;
+        padding: 8px 10px;
+    }
+}
+
+/* -------- 8.2 MODAL CARGA MASIVA -------- */
+#modalCargaAlumnos .modal {
+    width: 350px;
+    max-width: 90%;
+    text-align: center;
+    overflow-y: auto;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 580px;
+}
+
+#modalCargaAlumnos input[type="file"] {
+    margin: 0 auto;
+}
+
+#modalCargaAlumnos .botones {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+#modalCargaAlumnos .botones button {
+    width: 120px;
+    padding: 6px 0;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+#modalCargaAlumnos #btnLeerCSV {
+    background-color: var(--color-btn-primario, #28a745);
+    color: #fff;
+    border: none;
+}
+
+#modalCargaAlumnos #btnLeerCSV:hover {
+    background-color: var(--color-btn-primario-hover, #218838);
+}
+
+#modalCargaAlumnos #btnCancelarCarga {
+    background-color: var(--color-btn-secundario, #dc3545);
+    color: #fff;
+    border: none;
+}
+
+#modalCargaAlumnos #btnCancelarCarga:hover {
+    background-color: var(--color-btn-secundario-hover, #c82333);
+}
+
+@media (max-width: 768px) {
+    #modalCargaAlumnos .modal {
+        width: 90%;      
+        min-width: auto; 
+        padding: 12px;
+        max-height: 90vh; 
+    }
+
+    #modalCargaAlumnos .botones {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    #modalCargaAlumnos .botones button {
+        width: 100%;      
+    }
+
+    #modalCargaAlumnos input[type="file"] {
+        width: 100%;     
+    }
+}
+
+/* -------- 8.3 PREVIEW TABLA CARGA MASIVA -------- */
+#modalCargaAlumnos .contenido {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-x: auto;
+}
+
+#tablaPreview {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 8px;
+}
+
+#tablaPreview th,
+#tablaPreview td {
+    border: 1px solid var(--color-tabla-border, #ccc);
+    padding: 4px;
+    text-align: left;
+}
+
+#tablaPreview th {
+    background-color: var(--color-tabla-header, #f2f2f2);
+    position: sticky;
+    top: 0;
+}
+
+
+/* Responsive modal y tabla */
+@media (max-width: 600px) {
+    .modal {
+        width: 90%;
+        padding: 12px;
+    }
+
+    .modalForm .campos {
+        grid-template-columns: 1fr;
+    }
+
+    .modalForm .botones {
+        flex-direction: row;
+    }
+
+    .modalForm button,
+    #modalCargaAlumnos .botones button {
+        width: 100%;
+    }
+
+    #modalCargaAlumnos .modal {
+        width: 90%;
+    }
+}
+
+/* -------- 8.4 MODAL DETALLES ALUMNO -------- */
+.detalles-alumno {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 12px;
+    align-items: center;
+}
+
+.contenedor-foto {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contenedor-foto img {
+    max-width: 80px;
+    height: auto;
+    border-radius: 6px;
+    object-fit: cover;
+    border: 1px solid #e0e0e0;
+    padding: 4px;
+    background-color: var(--color-tabla-fondo, #f9f9f9);
+}
+
+/* Responsive modal detalles */
+@media (max-width: 600px) {
+    .detalles-alumno {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+}
+
+/* -------- 8.5 BOTONES CERRAR Y ERRORES -------- */
+.btn-cerrar {
+    display: block;
+    width: 100px;
+    padding: 6px 0;
+    margin: 10px auto 0;
+    background-color: var(--color-btn-cerrar, #3a5ec0);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-cerrar:hover {
+    background-color: var(--color-btn-cerrar-hover, #2c4e9c);
+}
+
+span.error {
+    color: var(--color-texto-error, red);
+    font-size: 0.8em;
+    display: block;
+}
+
+/* -------- 8.6 ELIMINAR ALUMNO -------- */
+.contenedor-eliminar {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#modalRegistro h3 {
+    text-align: center;
+}
+
+/*--------- 8.7 REGISTRO ALUMNO ----------- */
+.modalForm h3 {
+    text-align: center;
+    margin-bottom: 12px;
+    font-size: 16px;
+    color: var(--color-texto-titulo, #222);
+}
+
+.modalForm .campos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 12px;
+}
+
+.modalForm label {
+    display: block;
+    margin-bottom: 3px;
+    font-size: 16px;
+    color: var(--color-label, #333);
+}
+
+.modalForm input {
+    width: 100%;
+    padding: 5px 6px;
+    border: 1px solid var(--color-input-border, #ccc);
+    border-radius: 4px;
+    font-size: 13px;
+    box-sizing: border-box;
+}
+
+.modalForm .archivo,
+.modalForm .fotoPerfil {
+    margin-top: 10px;
+}
+
+.modalForm input[type="file"] {
+    border: none;
+    padding: 0;
+}
+
+.modalForm #btnAbrirCamara {
+    margin-top: 4px;
+    background: var(--color-btn-camara, #007bff);
+    color: #fff;
+    border: none;
+    padding: 5px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.modalForm .botones {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.modalForm button {
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.modalForm #btnGuardarNuevo,
+.modalForm #btnGuardarEditar {
+    width: 100px;
+    padding: 6px 0;
+    border: none;
+    color: #fff;
+    background: var(--color-btn-primario, #28a745);
+}
+
+.modalForm .cerrarModal {
+    width: 100px;
+    padding: 6px 0;
+    border: none;
+    color: #fff;
+    background: var(--color-btn-secundario, #dc3545);
+}
+
+.campo-password {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.campo-password input {
+    padding-right: 35px;
+}
+
+.campo-password .togglePassword {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    padding: 2px 5px;
+}
+
+.campo-password .togglePassword:hover {
+    color: #007bff;
+}
+
+#ModalRegistro .modal {
+    width: 800px;          
+    max-width: 90vw;        
+    padding: 25px;
+    max-height: 90vh;       
+    overflow-y: auto; 
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+@media (max-width: 768px) {
+    #ModalRegistro .modal {
+        width: 100%;
+        max-width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+        padding: 15px;
+    }
+
+    #ModalRegistro .modalForm .botones {
+        flex-direction: row; 
+        justify-content: center;
+        gap: 10px;
+    }
+
+    #ModalRegistro .modalForm button {
+        width: auto; 
+        min-width: 100px; 
+    }
+}
+
+/* ====================== ESTADÍSTICAS ====================== */
+.estadisticas h2 {
+    text-align: center;
+}
+
+.estadisticas {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: var(--padding-section);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.fila-graficos {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.grafico-container {
+    background-color: var(--color-fondo-panel);
+    padding: var(--padding-card);
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    flex: 1 1 300px;
+    max-width: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.grafico-container canvas {
+    width: 100% !important;
+
+}
+
+#graficoOferta-container {
+    background-color: var(--color-fondo-panel);
+    padding: var(--padding-card);
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+#graficoOferta {
+    width: 100%;
+    height: 600px;
+}
+
+#graficoTotales {
+    width: 100%;
+    height: 500px;
+}
+
+
 
 /* ====================== SOLICITUDES ====================== */
 .solicitudes {
@@ -387,6 +1217,7 @@ a {
 
 .solicitudes h2 {
     font-size: 1.2em;
+
     margin-bottom: 20px;
     color: var(--color-texto);
     font-family: var(--fuente-titulo);
@@ -395,13 +1226,14 @@ a {
 .solicitudes p {
     color: var(--color-texto-secundario);
     font-size: 1em;
+
     margin-bottom: 40px;
 }
 
 .lista-solicitudes {
     display: flex;
     flex-wrap: wrap;
-    justify-content:space-evenly;
+    justify-content: space-evenly;
     gap: 20px;
 }
 
@@ -420,11 +1252,10 @@ a {
     color: var(--color-primario);
 }
 
-
 #iframeCurriculum {
-    width: 500px;   
-    height: 80vh;  
-    border: none;  
+    width: 500px;
+    height: 80vh;
+    border: none;
 }
 
 /* Responsive Solicitudes */

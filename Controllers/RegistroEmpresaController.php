@@ -29,7 +29,7 @@ class RegistroEmpresaController
             'logueado' => $logueado
         ];
 
-        echo $this->templates->render('RegistroEmpresa', $data);
+        echo $this->templates->render('Empresa/RegistroEmpresa', $data);
     }
 
 
@@ -127,6 +127,6 @@ class RegistroEmpresaController
         }
 
         header("Location: ../public/index.php?menu=Login");
-        exit;
+
     }
 }

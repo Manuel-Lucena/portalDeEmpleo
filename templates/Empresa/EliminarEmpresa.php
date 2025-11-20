@@ -1,7 +1,7 @@
 <?php $this->layout('layout_simple', ['titulo' => 'Confirmar Eliminación']) ?>
 
 <?php $this->start('css') ?>
-<link rel="stylesheet" href="../Public/css/Sesion.css">
+<link rel="stylesheet" href="../Public/css/Forms.css">
 <?php $this->stop() ?>
 
 <?php $this->start('contenido') ?>
@@ -14,11 +14,11 @@
                 <input type="hidden" name="idEmpresa" value="<?= $idEmpresa ?>">
 
                 <div class="botones-eliminar">
-                    <button type="submit" name="accion" value="confirmarEliminar" class="btn-eliminar">
+                    <button type="submit" name="accion" value="confirmarEliminar" class="btn btn-eliminar">
                         Sí, eliminar
                     </button>
 
-                    <a href="../public/index.php?menu=PanelAdmin" class="btn-cancelar">
+                    <a href="../public/index.php?menu=PanelAdmin" class="btn btn-cancelar">
                         Cancelar
                     </a>
                 </div>

@@ -133,11 +133,11 @@ function postAlumno()
         $curriculum = $_FILES['curriculum'] ?? null;
         $fotoPerfil = $_FILES['fotoPerfil'] ?? null;
 
-       
+
         $validator = new Validator();
         $validator->limpiar();
 
-   
+
         $validator->obligatorio('nombre', $nombre);
         $validator->obligatorio('email', $email);
         $validator->email('email', $email);
@@ -176,15 +176,15 @@ function postAlumno()
                 RepoEstudios::save($estudio);
             }
 
-        
+
             if (!empty($fotoPerfil) && !empty($fotoPerfil['tmp_name'])) {
-        
+
                 $rutaFoto = "foto_" . $alumno->getIdUser() . ".png";
                 move_uploaded_file($fotoPerfil['tmp_name'], "../fotos/alumno/" . $rutaFoto);
                 $alumno->setFoto($rutaFoto);
                 RepoAlumno::update($alumno);
             } elseif (!empty($_POST['fotoPerfil'])) {
-               
+
                 $dataUrl = $_POST['fotoPerfil'];
                 list($type, $data) = explode(';', $dataUrl);
                 list(, $data) = explode(',', $data);
@@ -208,11 +208,9 @@ function postAlumno()
     echo json_encode($response);
 }
 
-
-
 function postAlumnosMasivo()
 {
-    $usuario = Security::verificarToken();
+    // $usuario = Security::verificarToken();
     $statusCode = 200;
     $response = [];
 
@@ -220,10 +218,13 @@ function postAlumnosMasivo()
         $input = json_decode(file_get_contents('php://input'), true);
         $cicloId = $input['cicloId'] ?? null;
         $alumnos = $input['alumnos'] ?? [];
-
         if (!$cicloId || empty($alumnos)) {
             $statusCode = 400;
-            $response = ["error" => "Faltan datos o alumnos para cargar"];
+            $response = [
+                "success" => false,
+                "insertados" => 0,
+                "errores" => ["No se seleccionó ciclo o alumnos válidos"]
+            ];
         } else {
             $insertados = 0;
             $errores = [];
@@ -236,20 +237,27 @@ function postAlumnosMasivo()
 
                 if (!$nombre || !$email) {
                     $errores[] = "Fila $index: faltan datos obligatorios";
-                } else {
-                    try {
-                        $user = new User($email, password_hash($password, PASSWORD_DEFAULT), 3);
-                        RepoUser::save($user);
-                        $alumno = new Alumno(null, $user->getId(), $nombre, $email, $fecha_nacimiento, null, null, null, null);
-                        RepoAlumno::save($alumno);
+                    continue;
+                }
 
-                        if ($cicloId) {
-                            $estudio = new Estudio($alumno->getId(), $cicloId, null, null);
-                            RepoEstudios::save($estudio);
-                        }
+                try {
+                    $user = new User($email, password_hash($password, PASSWORD_DEFAULT), 3);
+                    RepoUser::save($user);
 
-                        $insertados++;
-                    } catch (Exception $e) {
+                    $alumno = new Alumno(null, $user->getId(), $nombre, $email, $fecha_nacimiento, null, null, null, null);
+                    RepoAlumno::save($alumno);
+
+                    if ($cicloId) {
+                        $estudio = new Estudio($alumno->getId(), $cicloId, null, null);
+                        RepoEstudios::save($estudio);
+                    }
+
+                    $insertados++;
+                } catch (Exception $e) {
+
+                    if (strpos($e->getMessage(), 'Integrity constraint violation') !== false && strpos($e->getMessage(), 'Duplicate entry') !== false) {
+                        $errores[] = "El correo '$email' ya existe";
+                    } else {
                         $errores[] = "Fila $index: " . $e->getMessage();
                     }
                 }

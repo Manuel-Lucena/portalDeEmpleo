@@ -67,9 +67,9 @@ window.addEventListener("load", function () {
             })
                 .then(res => res.json())
                 .then(familias => {
-                      selectFamilia.innerHTML = '<option value="">Seleccione una Familia</option>';
+                    selectFamilia.innerHTML = '<option value="">Seleccione una Familia</option>';
                     familias.forEach(fam => {
-                        
+
                         const option = document.createElement("option");
                         option.value = fam.id;
                         option.textContent = fam.nombre;
@@ -151,17 +151,13 @@ window.addEventListener("load", function () {
                 })
                     .then(res => res.json())
                     .then(data => {
-             
+
                         if (data.errores) {
                             console.error("Errores PHP:", data.errores);
-                     
-                            Object.entries(data.errores).forEach(([campo, msg]) => {
-                                console.log(`${campo}: ${msg}`);
-                            });
-                            return; 
+                            return;
                         }
 
-                        // Si todo OK
+
                         modalAlumno.ocultar();
                         cargarAlumnos();
                     })
@@ -170,14 +166,16 @@ window.addEventListener("load", function () {
             };
         }
 
-        if (btnCancelar) btnCancelar.onclick = () => modalAlumno.ocultar();
-
+        if (btnCancelar) btnCancelar.onclick = () => {
+            modalAlumno.ocultar();
+            limpiarModalAlumno();
+        }
 
     });
 
-    // =======================
+
     // CARGA MASIVA DE ALUMNOS
-    // =======================
+
     const btnAgregarVarios = document.getElementById("btnAgregarVarios");
 
     if (btnAgregarVarios) {
@@ -255,82 +253,160 @@ window.addEventListener("load", function () {
                         const filas = lineas.slice(1).map(l => l.split(",").map(c => c.trim())).filter(cols => cols.length === cabecera.length);
 
                         let html = `
-                        <table class="tablaPreview">
-                            <thead>
-                                <tr>
-                                    <th>✔️</th>${cabecera.map(h => `<th>${h}</th>`).join("")}<th>Errores</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                    `;
+                <table class="tablaPreview">
+                    <thead>
+                        <tr>
+                            <th>✔️</th>${cabecera.map(h => `<th>${h}</th>`).join("")}<th>Errores</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
 
                         filas.forEach((cols, i) => {
                             html += `
-                            <tr data-index="${i}">
-                                <td><input type="checkbox" class="checkCSV"></td>
-                                ${cols.map(c => `<td><input type="text" class="inputCSV" value="${c}"></td>`).join("")}
-                                <td class="error"></td>
-                            </tr>
-                        `;
+                    <tr data-index="${i}">
+                        <td><input type="checkbox" class="checkCSV"></td>
+                        ${cols.map((c, idx) => `<td><input type="text" class="inputCSV" data-campo="${cabecera[idx]}" value="${c}"></td>`).join("")}
+                        <td class="error"></td>
+                    </tr>
+                `;
                         });
 
                         html += `</tbody></table>
-                        <button id="btnCargarSeleccionados">Cargar seleccionados</button>`;
-
+                     <button id="btnCargarSeleccionados">Cargar seleccionados</button>`;
                         document.getElementById("previewCSV").innerHTML = html;
 
-                        document.getElementById("btnCargarSeleccionados").onclick = () => {
-                            const filasTabla = document.querySelectorAll(".tablaPreview tbody tr");
-                            const seleccionados = [];
 
-                            filasTabla.forEach(tr => {
-                                const checkbox = tr.querySelector(".checkCSV");
-                                const inputs = Array.from(tr.querySelectorAll(".inputCSV"));
-                                const errorTd = tr.querySelector(".error");
 
-                                if (inputs.some(i => !i.value.trim())) {
-                                    errorTd.textContent = "Faltan datos";
-                                    checkbox.checked = false;
-                                } else {
-                                    errorTd.textContent = "";
-                                    if (checkbox.checked) {
-                                        seleccionados.push(inputs.map(i => i.value.trim()));
+                        // --- Leer CSV y mostrar preview ---
+                        const btnCargar = document.getElementById("btnCargarSeleccionados");
+                        if (btnCargar) {
+                            const btnCargar = document.getElementById("btnCargarSeleccionados");
+                            if (btnCargar) {
+                                btnCargar.onclick = () => {
+                                    const filas = document.querySelectorAll(".tablaPreview tbody tr");
+                                    const filasSeleccionadas = Array.from(filas).filter(tr => tr.querySelector(".checkCSV").checked);
+                                    const listaSeleccionados = [];
+
+                                    // Limpiar errores previos
+                                    filasSeleccionadas.forEach(tr => {
+                                        tr.querySelector(".error").textContent = "";
+                                        tr.dataset.errores = "";
+                                    });
+
+                                    // Validación local mínima
+                                    filasSeleccionadas.forEach((tr, i) => {
+                                        const datos = {};
+                                        tr.querySelectorAll(".inputCSV").forEach(input => {
+                                            const campo = input.dataset.campo;
+                                            if (campo) datos[campo] = input.value.trim();
+                                        });
+
+                                        let erroresFila = [];
+                                        if (!datos.nombre || !datos.email) erroresFila.push("Faltan datos obligatorios");
+
+                                        tr.dataset.errores = erroresFila.join(" | ");
+
+                                        if (erroresFila.length === 0) {
+                                            listaSeleccionados.push({
+                                                filaIndex: i,
+                                                nombre: datos.nombre,
+                                                email: datos.email,
+                                                password: datos.password || "123456",
+                                                fechaNacimiento: datos.fechaNacimiento || null
+                                            });
+                                        }
+                                    });
+
+                                    // Si no hay alumnos válidos localmente, mostramos errores y paramos
+                                    if (listaSeleccionados.length === 0) {
+                                        filasSeleccionadas.forEach(tr => {
+                                            const tdError = tr.querySelector(".error");
+                                            tdError.textContent = tr.dataset.errores || "";
+                                        });
+                                        return;
                                     }
-                                }
-                            });
 
-                            if (seleccionados.length === 0) { alert("No hay filas seleccionadas"); return; }
+                                    // Enviar al servidor solo los alumnos válidos
+                                    fetch("/api/ApiAlumno.php", {
+                                        method: "POST",
+                                        headers: {
+                                            "Content-Type": "application/json",
+                                            "Authorization": "Bearer " + localStorage.getItem("token")
+                                        },
+                                        body: JSON.stringify({
+                                            cicloId: selectCiclo.value,
+                                            alumnos: listaSeleccionados.map(a => [a.nombre, a.email, a.password, a.fechaNacimiento])
+                                        })
+                                    })
+                                        .then(res => res.json())
+                                        .then(data => {
+                                            const totalSeleccionados = listaSeleccionados.length;
+                                            const cargados = data.insertados || 0;
 
-                            fetch('/api/apiAlumno.php', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'Authorization': 'Bearer ' + localStorage.getItem('token')
-                                },
-                                body: JSON.stringify({ cicloId: selectCiclo.value, alumnos: seleccionados })
-                            })
-                                .then(res => res.json())
-                                .then(data => {
-                                    if (data.success) {
-                                        modalCarga.ocultar();
-                                        document.getElementById("previewCSV").innerHTML = "";
-                                        cargarAlumnos();
-                                    } else if (data.error) {
-                                        alert("Error: " + data.error);
-                                    }
-                                });
-                        };
+
+                                            if (data.errores && data.errores.length > 0) {
+                                                data.errores.forEach(err => {
+                                                    const fila = Array.from(filasSeleccionadas).find(tr =>
+                                                        tr.querySelector(".inputCSV[data-campo='email']").value &&
+                                                        err.includes(tr.querySelector(".inputCSV[data-campo='email']").value)
+                                                    );
+                                                    if (fila) {
+                                                        const tdError = fila.querySelector(".error");
+                                                        tdError.textContent = fila.dataset.errores
+                                                            ? fila.dataset.errores + " | " + err
+                                                            : err;
+                                                    }
+                                                });
+                                            }
+
+
+                                            filasSeleccionadas.forEach(tr => {
+                                                const email = tr.querySelector(".inputCSV[data-campo='email']").value;
+                                                const tieneError = Array.from(data.errores || []).some(err => err.includes(email));
+                                                const tdError = tr.querySelector(".error");
+
+                                                if (!tieneError && tr.dataset.errores === "") {
+
+                                                    tr.querySelectorAll("input, button").forEach(el => el.disabled = true);
+                                                    tdError.textContent = "Cargado correctamente";
+                                                    tr.classList.add("fila-cargada");
+                                                } else {
+
+                                                    if (!tdError.textContent && tr.dataset.errores) tdError.textContent = tr.dataset.errores;
+                                                }
+                                            });
+
+
+                                            alert(`Alumnos cargados correctamente: ${cargados} de ${totalSeleccionados}`);
+
+
+                                            if (cargados === totalSeleccionados) {
+                                                document.getElementById("previewCSV").innerHTML = "";
+                                                cargarAlumnos();
+                                            }
+
+                                        })
+                                        .catch(err => {
+                                            console.error("Error carga masiva:", err);
+                                            alert("Error en la conexión o en la carga de alumnos");
+                                        });
+                                };
+                            }
+                        }
+
                     };
 
                     reader.readAsText(archivo);
                 };
             }
+
         });
     }
 
-    // =========================
+
     // FUNCIONES AUXILIARES
-    // =========================
+
 
     function asignarEventosFila(fila) {
         const btnDetalles = fila.querySelector(".btn-verde");
@@ -364,13 +440,19 @@ window.addEventListener("load", function () {
 
                     const btnGuardarEditar = document.getElementById("btnGuardarEditar");
                     btnGuardarEditar.onclick = async () => {
+
+                        if (!validarAlumnoEditar()) {
+                            return;
+                        }
+
+
                         const data = {
                             id: idAlumno,
                             nombre: document.getElementById("editarNombre").value,
                             email: document.getElementById("editarEmail").value,
                             fecha_nacimiento: document.getElementById("editarFechaNacimiento").value,
                             direccion: document.getElementById("editarDireccion").value,
-                            telefono: document.getElementById("editarTelefono").value
+                            telefono: document.getElementById("editarTelefono").value,
                         };
 
                         const cvInput = document.getElementById("editarCurriculum");
@@ -501,9 +583,9 @@ window.addEventListener("load", function () {
         };
     }
 
-    // =========================
+
     // FUNCIONES DE CARGA
-    // =========================
+
     function cargarAlumnos() {
         fetch('/api/ApiAlumno.php', {
             headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
@@ -517,7 +599,7 @@ window.addEventListener("load", function () {
                     fila.innerHTML = `
                         <td>${alumno.nombre}</td>
                         <td>${alumno.email}</td>
-                        <td>
+                        <td class="tdBotones">
                             <input type="hidden" class="idAlumno" value="${alumno.id}">
                             <button class="btn-verde">Detalles</button>
                             <button class="btn-amarillo">Editar</button>
@@ -564,9 +646,8 @@ window.addEventListener("load", function () {
             .catch(err => console.error("Error buscando alumnos:", err));
     }
 
-    // ------------------------
+
     // VALIDACIÓN
-    // ------------------------
     function validarAlumno() {
         let valido = true;
 
@@ -597,33 +678,32 @@ window.addEventListener("load", function () {
         const spanFechaInicio = document.getElementById("errorFechaInicio");
         const spanFechaFin = document.getElementById("errorFechaFin");
 
-
         [spanNombre, spanEmail, spanPassword, spanFechaNacimiento, spanTelefono,
             spanDireccion, spanFamilia, spanCiclo, spanFechaInicio, spanFechaFin]
             .forEach(span => span.textContent = "");
 
         // --- Validaciones ---
-        if (!Validator.vacio(nombre)) {
+        if (!Validador.vacio(nombre)) {
             spanNombre.textContent = "Nombre obligatorio";
             valido = false;
         }
 
-        if (!Validator.vacio(email) || !Validator.email(email)) {
+        if (!Validador.vacio(email) || !Validador.email(email)) {
             spanEmail.textContent = "Email inválido";
             valido = false;
         }
 
-        if (!Validator.vacio(password) || password.length < 6) {
+        if (!Validador.vacio(password) || password.length < 6) {
             spanPassword.textContent = "Contraseña obligatoria (mín. 6 caracteres)";
             valido = false;
         }
 
-        if (fechaNacimiento && !Validator.fecha(fechaNacimiento)) {
+        if (fechaNacimiento && !Validador.fecha(fechaNacimiento)) {
             spanFechaNacimiento.textContent = "Fecha inválida";
             valido = false;
         }
 
-        if (telefono && !Validator.telefono(telefono)) {
+        if (telefono && !Validador.telefono(telefono)) {
             spanTelefono.textContent = "Teléfono inválido (9 dígitos)";
             valido = false;
         }
@@ -633,22 +713,22 @@ window.addEventListener("load", function () {
             valido = false;
         }
 
-        if (!Validator.vacio(familia)) {
+        if (!Validador.vacio(familia)) {
             spanFamilia.textContent = "Selecciona una familia";
             valido = false;
         }
 
-        if (!Validator.vacio(ciclo)) {
+        if (!Validador.vacio(ciclo)) {
             spanCiclo.textContent = "Selecciona un ciclo";
             valido = false;
         }
 
-        if (!Validator.fecha(fechaInicio)) {
+        if (!Validador.fecha(fechaInicio)) {
             spanFechaInicio.textContent = "Fecha de inicio obligatoria";
             valido = false;
         }
 
-        if (!Validator.fechaFinPosterior(fechaInicio, fechaFin)) {
+        if (!Validador.fechaFinPosterior(fechaInicio, fechaFin)) {
             spanFechaFin.textContent = "Fecha fin debe ser posterior a la de inicio";
             valido = false;
         }
@@ -667,4 +747,109 @@ window.addEventListener("load", function () {
     }
 
 
+
 });
+
+
+function validarAlumnoEditar() {
+    let valido = true;
+
+    // --- Campos ---
+    const nombre = document.getElementById("editarNombre").value.trim();
+    const email = document.getElementById("editarEmail").value.trim();
+    const password = document.getElementById("editarPassword").value;
+    const repetirPassword = document.getElementById("editarRepetirPassword").value;
+    const fechaNacimiento = document.getElementById("editarFechaNacimiento").value;
+    const telefono = document.getElementById("editarTelefono").value.trim();
+    const direccion = document.getElementById("editarDireccion").value.trim();
+    const curriculum = document.getElementById("editarCurriculum").files[0];
+    const fotoPerfil = document.getElementById("editarFotoPerfil").files[0];
+
+    // --- Spans de error ---
+    const spanNombre = document.getElementById("errorEditarNombre");
+    const spanEmail = document.getElementById("errorEditarEmail");
+    const spanPassword = document.getElementById("errorEditarPassword");
+    const spanRepetir = document.getElementById("errorEditarRepetirPassword");
+    const spanFechaNacimiento = document.getElementById("errorEditarFechaNacimiento");
+    const spanTelefono = document.getElementById("errorEditarTelefono");
+    const spanDireccion = document.getElementById("errorEditarDireccion");
+
+    [spanNombre, spanEmail, spanPassword, spanRepetir, spanFechaNacimiento, spanTelefono, spanDireccion]
+        .forEach(span => span.textContent = "");
+
+    // --- Validaciones ---
+    if (!Validador.vacio(nombre)) {
+        spanNombre.textContent = "Nombre obligatorio";
+        valido = false;
+    }
+
+    if (!Validador.vacio(email) || !Validador.email(email)) {
+        spanEmail.textContent = "Email inválido";
+        valido = false;
+    }
+
+    if (password && !Validador.maxLength(password, 50)) {
+        spanPassword.textContent = "Contraseña demasiado larga (máx. 50)";
+        valido = false;
+    }
+
+    if (password && repetirPassword && password !== repetirPassword) {
+        spanRepetir.textContent = "Las contraseñas no coinciden";
+        valido = false;
+    }
+
+    if (fechaNacimiento && !Validador.fecha(fechaNacimiento)) {
+        spanFechaNacimiento.textContent = "Fecha inválida";
+        valido = false;
+    }
+
+    if (telefono && !Validador.telefono(telefono)) {
+        spanTelefono.textContent = "Teléfono inválido (9 dígitos)";
+        valido = false;
+    }
+
+    if (direccion && !Validador.maxLength(direccion, 100)) {
+        spanDireccion.textContent = "Dirección demasiado larga";
+        valido = false;
+    }
+
+    if (curriculum && curriculum.type !== "application/pdf") {
+        alert("El currículum debe ser un PDF");
+        valido = false;
+    }
+
+    if (fotoPerfil && !["image/png"].includes(fotoPerfil.type)) {
+        alert("La foto debe ser PNG");
+        valido = false;
+    }
+
+    return valido;
+}
+
+
+function limpiarModalAlumno() {
+    document.getElementById("nuevoNombre").value = "";
+    document.getElementById("nuevoEmail").value = "";
+    document.getElementById("nuevoPassword").value = "";
+    document.getElementById("nuevaFechaNacimiento").value = "";
+    document.getElementById("nuevoTelefono").value = "";
+    document.getElementById("nuevaDireccion").value = "";
+    document.getElementById("selectFamilia").value = "";
+    document.getElementById("selectCiclo").innerHTML = '<option value="">Seleccione un ciclo</option>';
+    document.getElementById("selectCiclo").disabled = true;
+    document.getElementById("nuevoCurriculum").value = "";
+    document.getElementById("nuevaFotoPerfil").value = "";
+    document.getElementById("fechaInicioEstudio").value = "";
+    document.getElementById("fechaFinEstudio").value = "";
+
+    // Limpiar errores
+    const spansErrores = [
+        "errorNombre", "errorEmail", "errorPassword", "errorFechaNacimiento",
+        "errorTelefono", "errorDireccion", "errorFamilia", "errorCiclo",
+        "errorFechaInicio", "errorFechaFin"
+    ];
+    spansErrores.forEach(id => {
+        const span = document.getElementById(id);
+        if (span) span.textContent = "";
+    });
+}

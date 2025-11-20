@@ -7,7 +7,7 @@
     <title><?= $this->e($titulo ?? 'Portal de Empleo') ?></title>
     <link rel="icon" type="image/x-icon" href="/public/images/Logo.png">
     <!-- CSS global -->
-    <link rel="stylesheet" href="../Public/css/base.css">
+    <link rel="stylesheet" href="../Public/css/Paginas.css">
     <script src="../Public/js/menu.js"></script>
     <?= $this->section('css') ?>
 </head>
@@ -73,8 +73,7 @@
             <div class="footer-derecha">
                 <ul>
                     <li><a href="">Mapa del sitio</a></li>
-                    <li><a href="">Política de privacidad</a></li>
-                    <li><a href="">Política de cookies</a></li>
+                    <li><a href="index.php?menu=Politicas">Política de privacidad</a></li>
                 </ul>
             </div>
         </div>

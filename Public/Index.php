@@ -4,7 +4,7 @@ include_once __DIR__ . "/../Downloads/mi_autoload.php";
 
 use Helpers\Sesion;
 use Helpers\Login;
-use Services\PDFService;
+use Controllers\EstadisticasController;
 use Controllers\LoginController;
 use Controllers\RegistroEmpresaController;
 use Controllers\InicioController;
@@ -15,6 +15,7 @@ use Controllers\EditarEmpresaController;
 use Controllers\EliminarEmpresaController;
 use Controllers\DetallesEmpresaController;
 use Controllers\GestionOfertaController;
+use Controllers\PoliticasController;
 use Repositorys\RepoUser;
 use Services\PDFServices;
 
@@ -32,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['accion'] ?? '') == 'Login'
     if ($usuario) {
         Login::login($usuario);
         header("Location: Index.php?menu=Inicio");
-        exit;
+   
     }
 }
 
@@ -79,16 +80,25 @@ if (!Login::estaLogeado()) {
             } elseif ($accion === 'Eliminar' && $idOferta) {
                 $controller->eliminar($idOferta);
                 header("Location: index.php?menu=Oferta");
-                exit;
             } else {
                 $controller->index($idEmpresa);
             }
             break;
 
+        case 'MisEstadisticas':
+            $controller = new EstadisticasController();
+            $controller->index();
+            break;
+
+
+        case 'Politicas':
+
+            $controller = new PoliticasController();
+            $controller->index();
+            break;
 
 
         case 'Oferta':
-
 
             $controller = new OfertaController();
             $controller->index();
@@ -101,16 +111,16 @@ if (!Login::estaLogeado()) {
             break;
 
         case 'GenerarPDFAlumnos':
-    
+
             PDFServices::generarListadoAlumnos();
             break;
 
         case 'PanelAdmin':
-            if(Login::getRol() == 1){
-            $controller = new PanelAdminController();
-            $controller->index();
+            if (Login::getRol() == 1) {
+                $controller = new PanelAdminController();
+                $controller->index();
             } else {
-                 header("Location: Index.php");
+                header("Location: Index.php");
             }
             break;
 

@@ -41,7 +41,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
 function getSolicitudes()
 {
-      $usuario = Security::verificarToken();
+    $usuario = Security::verificarToken();
     $statusCode = 200;
     $response = [];
 
@@ -59,7 +59,11 @@ function getSolicitudes()
             $solicitudes = RepoSolicitud::findAll();
         } elseif ($rol == 2) {
 
-            $ofertas = RepoOferta::findByEmpresa($idUser);
+            $empresa = RepoEmpresa::findByUserId($idUser);
+            $idEmpresa = $empresa->getId();
+
+            $ofertas = RepoOferta::findByEmpresa($idEmpresa);
+
             foreach ($ofertas as $oferta) {
                 $sols = RepoSolicitud::findByOferta($oferta->getId());
                 foreach ($sols as $s) {
@@ -120,7 +124,7 @@ function postSolicitud()
             $statusCode = 400;
             $response = ["error" => "Faltan datos obligatorios (idAlumno o idOferta)"];
         } else {
-       
+
             $existente = RepoSolicitud::findByAlumnoYOferta($idAlumno, $idOferta);
             if ($existente) {
                 $statusCode = 400;
